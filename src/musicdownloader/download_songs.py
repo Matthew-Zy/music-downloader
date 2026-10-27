@@ -5,6 +5,7 @@ from contextlib import nullcontext
 from copy import deepcopy
 from dataclasses import asdict, replace
 from io import BytesIO
+from threading import Event
 from urllib.request import urlopen
 
 import mutagen
@@ -19,6 +20,10 @@ from ytmusicapi import YTMusic
 
 from musicdownloader.songloader import SongInfo, SongMetaData, QualityInfo
 import musicdownloader.config as config
+
+
+class _DownloadCancelled(BaseException):
+    """Bypass metadata error handlers when a worker is asked to stop."""
 
 
 def get_available_qualities(youtube_url: SongInfo | str, configuration: config.DownloadConfig = config.DEFAULT_DOWNLOAD_CONFIG) -> list[dict]:
@@ -109,7 +114,9 @@ def is_better_quality(new: dict, old: dict, *, ydl: YoutubeDL | None = None) -> 
 def download_songs(
         songs: list[SongInfo],
         already_downloaded_songs: list[SongInfo] = None,
-        configuration: config.DownloadConfig=config.DEFAULT_DOWNLOAD_CONFIG
+        configuration: config.DownloadConfig=config.DEFAULT_DOWNLOAD_CONFIG,
+        *,
+        cancel_event: Event | None = None,
 ) -> list[SongInfo]:
     """Return completed and previous records, including after Ctrl+C.
 
@@ -128,7 +135,12 @@ def download_songs(
 
     albums = {}
 
+    def check_cancelled(_status=None):
+        if cancel_event is not None and cancel_event.is_set():
+            raise _DownloadCancelled
+
     def get_metadata(info, ydl):
+        check_cancelled()
         metadata = {
             "title": info.get("track") or info.get("title"),
             "artist": info.get("artists") or ([info["artist"]] if info.get("artist") else None),
@@ -143,7 +155,9 @@ def download_songs(
         if not thumbnails and info.get("thumbnail"):
             thumbnails = [{"url": info["thumbnail"], "crop_square": True}]
         try:
+            check_cancelled()
             watch = music.get_watch_playlist(videoId=info["id"], limit=1)
+            check_cancelled()
             track = next(
                 (track for track in watch.get("tracks", [])
                  if track.get("videoId") == info["id"]),
@@ -166,6 +180,7 @@ def download_songs(
             if album_ref.get("id"):
                 album_id = album_ref["id"]
                 if album_id not in albums:
+                    check_cancelled()
                     albums[album_id] = music.get_album(album_id)
                 album = albums[album_id]
                 metadata["album"] = album.get("title") or metadata["album"]
@@ -178,6 +193,7 @@ def download_songs(
                         metadata["track_total"] = album.get("trackCount") or len(album["tracks"])
                         break
             if watch.get("lyrics"):
+                check_cancelled()
                 metadata["lyrics"] = (music.get_lyrics(watch["lyrics"]) or {}).get("lyrics")
         except Exception as exc:
             # Unofficial API and network failures must not discard a download.
@@ -185,6 +201,7 @@ def download_songs(
         return metadata, thumbnails
 
     def write_metadata(path, metadata, thumbnails, ydl):
+        check_cancelled()
         audio = mutagen.File(path)
         if not isinstance(audio, (MP4, OggOpus, OggVorbis)):
             raise ValueError(f"Unsupported audio format for tagging: {path}")
@@ -225,6 +242,7 @@ def download_songs(
                 thumbnail = max(thumbnails, key=lambda t: (t.get("width") or 0) * (t.get("height") or 0))
                 with urlopen(thumbnail["url"], timeout=15) as response:
                     cover = response.read()
+                check_cancelled()
                 if thumbnail.get("crop_square"):
                     with Image.open(BytesIO(cover)) as image:
                         side = min(image.size)
@@ -276,6 +294,8 @@ def download_songs(
         "extractor_retries": configuration.max_tries - 1,
         "file_access_retries": 0,
         "skip_unavailable_fragments": False,
+        "progress_hooks": [check_cancelled],
+        "postprocessor_hooks": [check_cancelled],
         "retry_sleep_functions": {
             kind: lambda n: min(2 ** n, 30)
             for kind in ("http", "fragment", "extractor")
@@ -293,15 +313,18 @@ def download_songs(
     }
 
     try:
+        check_cancelled()
         music = YTMusic()
         with YoutubeDL(yt_opts) as ydl:
             for song in songs:
+                check_cancelled()
                 previous = next((s for s in already_downloaded_songs if s == song), None)
                 try:
                     if not configuration.download_all and previous is not None:
                         if not configuration.check_quality_increase:
                             continue
                         info = ydl.extract_info(song.youtube_url, download=False)
+                        check_cancelled()
                         qualities = _qualities_from_info(info)
                         if not is_better_quality(
                             new=qualities[-1] if qualities else {},
@@ -356,7 +379,7 @@ def download_songs(
                     ),
                 ))
 
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, _DownloadCancelled):
         print("\nDownload interrupted; returning completed and previous downloads.")
 
     # Keep completed records first; retain previous records for skipped,

@@ -1,5 +1,10 @@
 from argparse import ArgumentParser, ArgumentError, ArgumentDefaultsHelpFormatter, BooleanOptionalAction
 from pathlib import Path 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from threading import Event, Lock
+
+from yt_dlp.globals import all_plugins_loaded
+from yt_dlp.plugins import load_all_plugins
 
 from . import config
 from . import musicloader
@@ -40,7 +45,7 @@ def parse_args() -> dict[str, any]:
     return args
 
 
-def download_from_source_file(source_location: Path, save_location: Path, configuration: config.DownloadConfig):
+def download_from_source_file(source_location: Path, save_location: Path, configuration: config.DownloadConfig, *, cancel_event: Event | None = None):
     try: 
         to_download = musicloader.read_music_file_toml(source_location)
     except FileNotFoundError:
@@ -50,26 +55,70 @@ def download_from_source_file(source_location: Path, save_location: Path, config
         prev_downloaded = musicloader.read_music_file_json(save_location)
     except FileNotFoundError:
         prev_downloaded = []
-    just_downloaded = download_songs.download_songs(to_download, prev_downloaded, configuration)
+    just_downloaded = download_songs.download_songs(
+        to_download, prev_downloaded, configuration, cancel_event=cancel_event,
+    )
     musicloader.write_music_file_json(save_location, just_downloaded)
 
 def download_from_source_folder(args: dict[str, any]):
     source_folder: Path = Path(args.location)
-    for d in source_folder.iterdir():
-        if d.is_file() or not d.exists():
-            continue 
-        for f in d.iterdir():
-            if f.is_file() and f.suffix == "toml":
-                configuration: config.DownloadConfig = config.DownloadConfig(
-                    download_all=args.all,
-                    check_quality_increase=args.check_quality_increase,
-                    output_folder=f.parent,
-                    max_tries=args.retries,
-                    cookies=args.cookies,
-                    browser_cookies=args.cookies_from_browser,)
-                download_from_source_file(f, to_d_format(f), configuration)
-            elif f.is_dir():
-                pass 
+    cancel_event = Event()
+    output_locks = {}
+
+    def download_file(source, output_lock):
+        # Files in the same directory share audio paths, so serialize them.
+        while not cancel_event.is_set():
+            if output_lock.acquire(timeout=0.1):
+                break
+        else:
+            return
+        try:
+            if cancel_event.is_set():
+                return
+            configuration = config.DownloadConfig(
+                download_all=args.all,
+                check_quality_increase=args.check_quality_increase,
+                output_folder=source.parent,
+                max_tries=args.retries,
+                cookies=args.cookies,
+                browser_cookies=args.cookies_from_browser,
+            )
+            download_from_source_file(
+                source, to_d_format(source), configuration, cancel_event=cancel_event,
+            )
+        finally:
+            output_lock.release()
+
+    # yt-dlp's lazy plugin registration uses shared state without a lock.
+    # Complete it on the main thread before workers construct YoutubeDL.
+    if not all_plugins_loaded.value:
+        load_all_plugins()
+
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        futures = []
+        try:
+            directories = [source_folder]
+            visited = set()
+            while directories:
+                directory = directories.pop()
+                resolved = directory.resolve()
+                if resolved in visited:
+                    continue
+                visited.add(resolved)
+                for source in directory.iterdir():
+                    if source.is_dir():
+                        directories.append(source)
+                    elif source.is_file() and source.suffix == ".toml":
+                        output_lock = output_locks.setdefault(source.parent.resolve(), Lock())
+                        futures.append(executor.submit(download_file, source, output_lock))
+            for future in as_completed(futures):
+                future.result()
+        except KeyboardInterrupt:
+            cancel_event.set()
+            for future in futures:
+                future.cancel()
+            print("\nStopping downloads and saving completed records...")
+        # Executor shutdown waits for active workers to save their records.
 
 def main() -> None:
     args = parse_args()
