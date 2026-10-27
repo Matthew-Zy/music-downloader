@@ -244,10 +244,12 @@ def download_songs(songs: list[SongInfo], already_downloaded_songs: list[SongInf
         audio.save()
 
     yt_opts = {
-        "format": "bestaudio[ext=m4a][abr>=250]/bestaudio",
-        "outtmpl": str(Path(configuration.output_location) / "%(title)s.%(ext)s"),
+        "format": "bestaudio",
+        "outtmpl": str(Path(configuration.output_folder) / "%(title)s.%(ext)s"),
         "noplaylist": True,
         "cookiesfrombrowser": ("firefox",),
+        "force_overwrites": True,
+        "remote_components": ["ejs:github"],
         "ignoreerrors": False,
         "js_runtimes": {"node": {}},
         # yt-dlp counts retries after the initial attempt. Let its downloader
@@ -343,16 +345,20 @@ def main():
 
     x = [
         SongInfo(
-            youtube_url = "https://www.youtube.com/watch?v=Oqrswo5KlCU",
+            youtube_url = "https://music.youtube.com/watch?v=Oqrswo5KlCU",
             spotify_url="https://open.spotify.com/track/6eIdYm2beEFXDadXRCipHb",
             name="Sukiyo Two hearts",
             metadata_overrides=SongMetaData(artist="allah pepe")
         ),
         SongInfo(
             youtube_url="https://www.youtube.com/watch?v=g89-7dQMMjY"
+        ),
+        SongInfo(
+            youtube_url="https://music.youtube.com/watch?v=7nVctvQVz0U"
         )
     ]
     # pprint(get_available_qualities(x[0]))
-    pprint(get_highest_quality(x[0]))
-  
+    # pprint(get_available_qualities(x[-1]))
+    pprint(get_highest_quality(x[-1]))
+    
     write_music_file_json("music/.downloaded_songs.json", download_songs(x))
