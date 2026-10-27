@@ -363,3 +363,5 @@ def main():
     pprint(get_highest_quality(x[-1]))
     
     write_music_file_json("music/.downloaded_songs.json", download_songs(x))
+if __name__ == "__main__":
+    main()
