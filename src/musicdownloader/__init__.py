@@ -1,4 +1,4 @@
-from argparse import ArgumentParser, ArgumentError, ArgumentDefaultsHelpFormatter
+from argparse import ArgumentParser, ArgumentError, ArgumentDefaultsHelpFormatter, BooleanOptionalAction
 from pathlib import Path 
 
 from . import config
@@ -14,6 +14,12 @@ def parse_args() -> dict[str, any]:
     parser.add_argument("-sf", "--save-file", type=Path, default=config.DEFAULT_PREV_STORE_LOCATION, help="File to use from a previous download to prevent duplicate downloads, file to write to after download. If a custom file/folder is passed through -l/--location, it will default to ${location}/${location}-downloaded.json if folder, and ${location}-downloaded.json if file.")
     parser.add_argument("-ol", "--output-folder", type=Path, default=config.DEFAULT_OUTPUT_FOLDER, help="Folder to save songs to. If a custom location is provided, it will default to ${location}/${location}")
     parser.add_argument("--all", action='store_true', dest="all", default=config.DEFAULT_DOWNLOAD_ALL, help="Download all songs from given location instead of downloading undownloaded songs")
+    parser.add_argument(
+        "--check-quality-increase",
+        action=BooleanOptionalAction,
+        default=config.DEFAULT_CHECK_QUALITY_INCREASE,
+        help="Check previously downloaded songs for quality upgrades (ignored with --all)",
+    )
     parser.add_argument("-r", "--retries", type=int, default=config.DEFAULT_MAX_TRIES, help="Maximum retries for failing to download a song")
     
     cookies = parser.add_mutually_exclusive_group()
@@ -56,6 +62,7 @@ def download_from_source_folder(args: dict[str, any]):
             if f.is_file() and f.suffix == "toml":
                 configuration: config.DownloadConfig = config.DownloadConfig(
                     download_all=args.all,
+                    check_quality_increase=args.check_quality_increase,
                     output_folder=f.parent,
                     max_tries=args.retries,
                     cookies=args.cookies,
@@ -70,6 +77,7 @@ def main() -> None:
         print(args)
         configuration: config.DownloadConfig = config.DownloadConfig(
             download_all=args.all,
+            check_quality_increase=args.check_quality_increase,
             output_folder=args.output_folder,
             max_tries=args.retries,
             cookies=args.cookies,

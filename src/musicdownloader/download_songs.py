@@ -1,6 +1,7 @@
 from yt_dlp import YoutubeDL 
 from pathlib import Path 
 from base64 import b64encode
+from contextlib import nullcontext
 from copy import deepcopy
 from dataclasses import asdict, replace
 from io import BytesIO
@@ -44,6 +45,11 @@ def get_available_qualities(youtube_url: SongInfo | str, configuration: config.D
     with YoutubeDL(yt_opts) as ydl:
         info = ydl.extract_info(youtube_url, download=False)
 
+    return _qualities_from_info(info)
+
+
+def _qualities_from_info(info: dict | None) -> list[dict]:
+    """Read audio qualities from an already extracted, sorted result."""
     if info is None:
         return []
     return [
@@ -66,7 +72,7 @@ def get_highest_quality(song: SongInfo | str, configuration: config.DownloadConf
     return qualities[-1] if qualities else {}
 
 
-def is_better_quality(new: dict, old: dict) -> bool:
+def is_better_quality(new: dict, old: dict, *, ydl: YoutubeDL | None = None) -> bool:
     """Return True only when new ranks higher than old; ties return False.
 
     Accepts dictionaries returned by get_available_qualities. Uses yt-dlp's
@@ -94,14 +100,24 @@ def is_better_quality(new: dict, old: dict) -> bool:
         for quality in (new, old)
     ]
     new_format = formats[0]
-    with YoutubeDL({"quiet": True}) as ydl:
-        ydl.sort_formats({"formats": formats})
+    with (nullcontext(ydl) if ydl is not None else YoutubeDL({"quiet": True})) as sorter:
+        sorter.sort_formats({"formats": formats})
     return formats[-1] is new_format
     
 
 
-def download_songs(songs: list[SongInfo], already_downloaded_songs: list[SongInfo] = None, configuration: config.DownloadConfig=config.DEFAULT_DOWNLOAD_CONFIG) -> list[SongInfo]:
-    """Return download records, retrying transient failures up to max_tries per operation."""
+def download_songs(
+        songs: list[SongInfo],
+        already_downloaded_songs: list[SongInfo] = None,
+        configuration: config.DownloadConfig=config.DEFAULT_DOWNLOAD_CONFIG
+) -> list[SongInfo]:
+    """Return completed and previous records, including after Ctrl+C.
+
+    New records take precedence by URL, even with download_all enabled.
+    Previously downloaded songs are checked for upgrades only when
+    check_quality_increase is enabled; download_all always downloads them.
+    Retry transient failures up to max_tries per operation.
+    """
 
     if configuration.max_tries < 1:
         raise ValueError("max_tries must be at least 1")
@@ -110,7 +126,6 @@ def download_songs(songs: list[SongInfo], already_downloaded_songs: list[SongInf
         already_downloaded_songs = []
     downloaded_songs: list[SongInfo] = []
 
-    music = YTMusic()
     albums = {}
 
     def get_metadata(info, ydl):
@@ -277,67 +292,79 @@ def download_songs(songs: list[SongInfo], already_downloaded_songs: list[SongInf
         ],
     }
 
-    with YoutubeDL(yt_opts) as ydl:
-        for song in songs:
-            previous = next((s for s in already_downloaded_songs if s == song), None)
-            if not configuration.download_all and previous is not None:
-                is_better_quality_available = is_better_quality(
-                    new=get_highest_quality(song, configuration=configuration),
-                    old=asdict(previous.quality) if previous.quality else {},
-                )
-                if is_better_quality_available is False:
-                    continue 
+    try:
+        music = YTMusic()
+        with YoutubeDL(yt_opts) as ydl:
+            for song in songs:
+                previous = next((s for s in already_downloaded_songs if s == song), None)
+                try:
+                    if not configuration.download_all and previous is not None:
+                        if not configuration.check_quality_increase:
+                            continue
+                        info = ydl.extract_info(song.youtube_url, download=False)
+                        qualities = _qualities_from_info(info)
+                        if not is_better_quality(
+                            new=qualities[-1] if qualities else {},
+                            old=asdict(previous.quality) if previous.quality else {},
+                            ydl=ydl,
+                        ):
+                            continue
+                        # Download the already resolved formats without extracting again.
+                        info = ydl.process_ie_result(info, download=True)
+                    else:
+                        info = ydl.extract_info(song.youtube_url, download=True)
+                except DownloadError as exc:
+                    print(f"Failed: {song.youtube_url}: {exc}")
+                    continue
+                if info is None:
+                    continue
+                metadata, thumbnails = get_metadata(info, ydl)
+                if song.metadata_overrides is not None:
+                    metadata.update({
+                        key: value for key, value in asdict(song.metadata_overrides).items()
+                        if value is not None
+                    })
+                # Per-download data contains changes made by postprocessors, such
+                # as WebM becoming Opus; unchanged fields remain in the main info.
+                downloaded = {
+                    **info,
+                    **next(
+                        (item for item in info.get("requested_downloads", []) if item.get("filepath")),
+                        {},
+                    ),
+                }
+                path = downloaded.get("filepath")
+                if not path or not Path(path).is_file():
+                    ydl.report_warning(f"No downloaded audio file found for {song.youtube_url}")
+                    continue
+                try:
+                    write_metadata(downloaded["filepath"], metadata, thumbnails, ydl)
+                except (mutagen.MutagenError, OSError, ValueError, KeyError) as exc:
+                    ydl.report_warning(f"Downloaded audio, but could not write music tags: {exc}")
 
-            try:
-                info = ydl.extract_info(song.youtube_url, download=True)
-            except DownloadError as exc:
-                print(f"Failed: {song.youtube_url}: {exc}")
-                continue
-            if info is None:
-                continue
-            metadata, thumbnails = get_metadata(info, ydl)
-            if song.metadata_overrides is not None:
-                metadata.update({
-                    key: value for key, value in asdict(song.metadata_overrides).items()
-                    if value is not None
-                })
-            # Per-download data contains changes made by postprocessors, such
-            # as WebM becoming Opus; unchanged fields remain in the main info.
-            downloaded = {
-                **info,
-                **next(
-                    (item for item in info.get("requested_downloads", []) if item.get("filepath")),
-                    {},
-                ),
-            }
-            path = downloaded.get("filepath")
-            if not path or not Path(path).is_file():
-                ydl.report_warning(f"No downloaded audio file found for {song.youtube_url}")
-                continue
-            try:
-                write_metadata(downloaded["filepath"], metadata, thumbnails, ydl)
-            except (mutagen.MutagenError, OSError, ValueError, KeyError) as exc:
-                ydl.report_warning(f"Downloaded audio, but could not write music tags: {exc}")
+                downloaded_songs.append(replace(
+                    song,
+                    name=song.name or metadata.get("title") or info.get("title"),
+                    metadata_overrides=deepcopy(song.metadata_overrides),
+                    quality=QualityInfo(
+                        bitrate_kbps=downloaded.get("abr"),
+                        channels=downloaded.get("audio_channels"),
+                        codec=downloaded.get("acodec"),
+                        ext=downloaded.get("ext"),
+                        format_id=downloaded.get("format_id"),
+                        sample_rate_hz=downloaded.get("asr"),
+                    ),
+                ))
 
-            downloaded_songs.append(replace(
-                song,
-                name=song.name or metadata.get("title") or info.get("title"),
-                metadata_overrides=deepcopy(song.metadata_overrides),
-                quality=QualityInfo(
-                    bitrate_kbps=downloaded.get("abr"),
-                    channels=downloaded.get("audio_channels"),
-                    codec=downloaded.get("acodec"),
-                    ext=downloaded.get("ext"),
-                    format_id=downloaded.get("format_id"),
-                    sample_rate_hz=downloaded.get("asr"),
-                ),
-            ))
+    except KeyboardInterrupt:
+        print("\nDownload interrupted; returning completed and previous downloads.")
 
+    # Keep completed records first; retain previous records for skipped,
+    # failed, interrupted, or unvisited songs regardless of download_all.
+    merged = {song.youtube_url: song for song in downloaded_songs}
     for song in already_downloaded_songs:
-        if song not in downloaded_songs:
-            downloaded_songs.append(song)
-
-    return downloaded_songs
+        merged.setdefault(song.youtube_url, song)
+    return list(merged.values())
 
 
 def main():

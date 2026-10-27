@@ -8,6 +8,7 @@ DEFAULT_FILE_LOCATION: Path = Path("music/songs.toml")
 DEFAULT_OUTPUT_FOLDER: Path = DEFAULT_FILE_LOCATION.parent / DEFAULT_FILE_LOCATION.stem
 DEFAULT_PREV_STORE_LOCATION: Path = DEFAULT_FILE_LOCATION.parent / f"{DEFAULT_FILE_LOCATION.stem}-downloaded.json"
 DEFAULT_DOWNLOAD_ALL: bool = False
+DEFAULT_CHECK_QUALITY_INCREASE: bool = True
 DEFAULT_MAX_TRIES: int = 5
 DEFAULT_COOKIES_BROWSER: str = "firefox"
 
@@ -18,6 +19,7 @@ class DownloadConfig:
     max_tries: int = DEFAULT_MAX_TRIES
     cookies: Optional[str] = None 
     browser_cookies: Optional[str] = DEFAULT_COOKIES_BROWSER
+    check_quality_increase: bool = DEFAULT_CHECK_QUALITY_INCREASE
 
     def cookie_options(self) -> dict:
         """Translate the selected cookie source into yt-dlp options."""
