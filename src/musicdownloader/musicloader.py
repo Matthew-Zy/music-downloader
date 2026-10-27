@@ -1,4 +1,4 @@
-import tomllib
+import tomllib, json
 from pathlib import Path
 from typing import Literal
 from dataclasses import dataclass, asdict
@@ -44,7 +44,24 @@ def write_music_file_toml(file: Path | str, song_contents: list[SongInfo]):
     song_contents = asdict(song_contents, dict_factory=ignore_none_factory)
     with open(file, 'wb') as f:
         tomli_w.dump(song_contents, f)
+
+def read_music_file_json(file: Path | str) -> list[SongInfo]:
+    with open(file, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+    songs_list: SongList = dacite.from_dict(data_class=SongList, data=data)
+    return songs_list.song
     
+
+def write_music_file_json(file: Path | str, song_contents: list[SongInfo]):
+    file = Path(file) if isinstance(file, str) else file 
+    if file.is_dir():
+        raise ValueError("Given a folder directory instead of a file")
+    if not file.parent.exists():
+        file.parent.mkdir(parents=True, exist_ok=True)
+    song_contents = SongList(song=song_contents)
+    song_contents = asdict(song_contents, dict_factory=ignore_none_factory) 
+    with open(file, "w", encoding="utf-8") as file:
+        json.dump(song_contents, file, indent=4)
 
 if __name__ == '__main__':
     x = read_music_file_toml("./music/songs.toml")
