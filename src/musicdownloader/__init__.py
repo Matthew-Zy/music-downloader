@@ -3,7 +3,7 @@ from pathlib import Path
 
 from . import config
 from . import musicloader
-
+from . import download_songs
 
 def is_valid_folder_or_file(path):
     if Path(path).exists():
@@ -28,21 +28,28 @@ def parse_args() -> dict[str, any]:
     cookies.add_argument(
         "--cookies-from-browser",
         metavar="BROWSER[:PROFILE]",
+        default=config.DEFAULT_COOKIES_BROWSER,
         help="Browser cookies, e.g. firefox or chrome:Profile 1",
     )
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.cookies is not None:
+        args.cookies_from_browser = None
+    return args
 
 def main() -> None:
     args = parse_args()
-    print(args)
-    print("Hello from musicdownloader!")
     configuration: config.DownloadConfig = config.DownloadConfig(
         download_all=args.all,
         output_folder=args.output_folder,
         max_tries=args.retries,
+        cookies=args.cookies,
+        browser_cookies=args.cookies_from_browser,
 
     )
-    print(configuration)
-    return
-    x = musicloader.read_music_file_toml(args.location)
-    musicloader.write_music_file_json(args.save_file, x)
+    to_download = musicloader.read_music_file_toml(args.location)
+    try:
+        prev_downloaded = musicloader.read_music_file_json(args.save_file)
+    except FileNotFoundError:
+        prev_downloaded = []
+    just_downloaded = download_songs.download_songs(to_download, prev_downloaded, configuration)
+    musicloader.write_music_file_json(args.save_file, just_downloaded)

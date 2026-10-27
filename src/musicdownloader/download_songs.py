@@ -1,16 +1,31 @@
 from yt_dlp import YoutubeDL 
 from pathlib import Path 
+from base64 import b64encode
+from copy import deepcopy
+from dataclasses import asdict, replace
+from io import BytesIO
+from urllib.request import urlopen
+
+import mutagen
+from PIL import Image
+from mutagen.flac import Picture
+from mutagen.mp4 import MP4, MP4Cover
+from mutagen.oggopus import OggOpus
+from mutagen.oggvorbis import OggVorbis
+from yt_dlp.utils import DownloadError
+from ytmusicapi import YTMusic
+
 
 from musicdownloader.songloader import SongInfo, SongMetaData, QualityInfo
 import musicdownloader.config as config
 
 
-def get_available_qualities(youtube_url: SongInfo | str) -> list[dict]:
+def get_available_qualities(youtube_url: SongInfo | str, configuration: config.DownloadConfig = config.DEFAULT_DOWNLOAD_CONFIG) -> list[dict]:
     """Return available audio-only formats without downloading the song.
 
     Each entry includes the format ID, container extension, codec, reported
     bitrate in kbps, sample rate in Hz, and channel count. Unknown values are
-    None. Uses the same Firefox cookies and Node runtime as download_songs.
+    None. Uses the configured cookie source and the Node runtime.
     Extraction failures raise yt_dlp.utils.DownloadError.
     """
     if isinstance(youtube_url, SongInfo):
@@ -19,7 +34,7 @@ def get_available_qualities(youtube_url: SongInfo | str) -> list[dict]:
     yt_opts = {
         "format": "bestaudio",
         "noplaylist": True,
-        "cookiesfrombrowser": ("firefox",),
+        **configuration.cookie_options(),
         "ignoreerrors": False,
         "js_runtimes": {"node": {}},
         "skip_download": True,
@@ -46,8 +61,8 @@ def get_available_qualities(youtube_url: SongInfo | str) -> list[dict]:
         and fmt.get("has_drm") is not True
     ]
 
-def get_highest_quality(song: SongInfo | str) -> dict:
-    qualities: list[dict] = get_available_qualities(song)
+def get_highest_quality(song: SongInfo | str, configuration: config.DownloadConfig = config.DEFAULT_DOWNLOAD_CONFIG) -> dict:
+    qualities: list[dict] = get_available_qualities(song, configuration=configuration)
     return qualities[-1] if qualities else {}
 
 
@@ -87,20 +102,6 @@ def is_better_quality(new: dict, old: dict) -> bool:
 
 def download_songs(songs: list[SongInfo], already_downloaded_songs: list[SongInfo] = None, configuration: config.DownloadConfig=config.DEFAULT_DOWNLOAD_CONFIG) -> list[SongInfo]:
     """Return download records, retrying transient failures up to max_tries per operation."""
-    from base64 import b64encode
-    from copy import deepcopy
-    from dataclasses import asdict, replace
-    from io import BytesIO
-    from urllib.request import urlopen
-
-    import mutagen
-    from PIL import Image
-    from mutagen.flac import Picture
-    from mutagen.mp4 import MP4, MP4Cover
-    from mutagen.oggopus import OggOpus
-    from mutagen.oggvorbis import OggVorbis
-    from yt_dlp.utils import DownloadError
-    from ytmusicapi import YTMusic
 
     if configuration.max_tries < 1:
         raise ValueError("max_tries must be at least 1")
@@ -247,7 +248,7 @@ def download_songs(songs: list[SongInfo], already_downloaded_songs: list[SongInf
         "format": "bestaudio",
         "outtmpl": str(Path(configuration.output_folder) / "%(title)s.%(ext)s"),
         "noplaylist": True,
-        "cookiesfrombrowser": ("firefox",),
+        **configuration.cookie_options(),
         "force_overwrites": True,
         "remote_components": ["ejs:github"],
         "ignoreerrors": False,
@@ -281,7 +282,7 @@ def download_songs(songs: list[SongInfo], already_downloaded_songs: list[SongInf
             previous = next((s for s in already_downloaded_songs if s == song), None)
             if not configuration.download_all and previous is not None:
                 is_better_quality_available = is_better_quality(
-                    new=get_highest_quality(song),
+                    new=get_highest_quality(song, configuration=configuration),
                     old=asdict(previous.quality) if previous.quality else {},
                 )
                 if is_better_quality_available is False:
@@ -348,10 +349,10 @@ def main():
             youtube_url = "https://music.youtube.com/watch?v=Oqrswo5KlCU",
             spotify_url="https://open.spotify.com/track/6eIdYm2beEFXDadXRCipHb",
             name="Sukiyo Two hearts",
-            metadata_overrides=SongMetaData(artist="allah pepe")
         ),
         SongInfo(
-            youtube_url="https://www.youtube.com/watch?v=g89-7dQMMjY"
+            youtube_url="https://www.youtube.com/watch?v=g89-7dQMMjY",
+            metadata_overrides=SongMetaData(artist="Saki")
         ),
         SongInfo(
             youtube_url="https://music.youtube.com/watch?v=7nVctvQVz0U"
