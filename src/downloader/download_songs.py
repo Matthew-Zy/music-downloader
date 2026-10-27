@@ -86,19 +86,24 @@ def is_better_quality(new: dict, old: dict) -> bool:
 
 
 def download_songs(songs: list[SongInfo], already_downloaded_songs: list[SongInfo] = None, configuration: config.DownloadConfig=config.DEFAULT_DOWNLOAD_CONFIG) -> list[SongInfo]:
-    """Return records for successful downloads, preserving overrides and quality."""
+    """Return download records, retrying transient failures up to max_tries per operation."""
     from base64 import b64encode
     from copy import deepcopy
     from dataclasses import asdict, replace
+    from io import BytesIO
     from urllib.request import urlopen
 
     import mutagen
+    from PIL import Image
     from mutagen.flac import Picture
     from mutagen.mp4 import MP4, MP4Cover
     from mutagen.oggopus import OggOpus
     from mutagen.oggvorbis import OggVorbis
     from yt_dlp.utils import DownloadError
     from ytmusicapi import YTMusic
+
+    if configuration.max_tries < 1:
+        raise ValueError("max_tries must be at least 1")
 
     if already_downloaded_songs is None:
         already_downloaded_songs = []
@@ -115,7 +120,12 @@ def download_songs(songs: list[SongInfo], already_downloaded_songs: list[SongInf
             "year": info.get("release_year"),
             "track_number": info.get("track_number"),
         }
-        thumbnails = []
+        thumbnails = [
+            {**t, "crop_square": True}
+            for t in (info.get("thumbnails") or []) if t.get("url")
+        ]
+        if not thumbnails and info.get("thumbnail"):
+            thumbnails = [{"url": info["thumbnail"], "crop_square": True}]
         try:
             watch = music.get_watch_playlist(videoId=info["id"], limit=1)
             track = next(
@@ -129,7 +139,12 @@ def download_songs(songs: list[SongInfo], already_downloaded_songs: list[SongInf
             metadata["title"] = track.get("title") or metadata["title"]
             metadata["artist"] = [a["name"] for a in track.get("artists", []) if a.get("name")] or metadata["artist"]
             metadata["year"] = track.get("year") or metadata["year"]
-            thumbnails = track.get("thumbnail") or track.get("thumbnails") or []
+            # Watch results can contain a video's rectangular thumbnail even
+            # when returned by YouTube Music. Treat it as fallback artwork;
+            # actual album covers below replace it without a crop flag.
+            track_thumbnails = track.get("thumbnail") or track.get("thumbnails") or []
+            if track_thumbnails:
+                thumbnails = [{**t, "crop_square": True} for t in track_thumbnails if t.get("url")] or thumbnails
             album_ref = track.get("album") or {}
             metadata["album"] = album_ref.get("name") or metadata["album"]
             if album_ref.get("id"):
@@ -194,12 +209,27 @@ def download_songs(songs: list[SongInfo], already_downloaded_songs: list[SongInf
                 thumbnail = max(thumbnails, key=lambda t: (t.get("width") or 0) * (t.get("height") or 0))
                 with urlopen(thumbnail["url"], timeout=15) as response:
                     cover = response.read()
+                if thumbnail.get("crop_square"):
+                    with Image.open(BytesIO(cover)) as image:
+                        side = min(image.size)
+                        left = (image.width - side) // 2
+                        top = (image.height - side) // 2
+                        square = image.crop((left, top, left + side, top + side))
+                        buffer = BytesIO()
+                        square.save(buffer, format="PNG")
+                        cover = buffer.getvalue()
                 if cover.startswith(b"\xff\xd8\xff"):
                     mime, image_format = "image/jpeg", MP4Cover.FORMAT_JPEG
                 elif cover.startswith(b"\x89PNG\r\n\x1a\n"):
                     mime, image_format = "image/png", MP4Cover.FORMAT_PNG
                 else:
-                    raise ValueError("Album artwork is not JPEG or PNG")
+                    # YouTube video thumbnails may be WebP; MP4 cover art
+                    # requires JPEG or PNG.
+                    with Image.open(BytesIO(cover)) as image:
+                        buffer = BytesIO()
+                        image.save(buffer, format="PNG")
+                        cover = buffer.getvalue()
+                    mime, image_format = "image/png", MP4Cover.FORMAT_PNG
                 if isinstance(audio, MP4):
                     audio["covr"] = [MP4Cover(cover, imageformat=image_format)]
                 else:
@@ -220,6 +250,18 @@ def download_songs(songs: list[SongInfo], already_downloaded_songs: list[SongInf
         "cookiesfrombrowser": ("firefox",),
         "ignoreerrors": False,
         "js_runtimes": {"node": {}},
+        # yt-dlp counts retries after the initial attempt. Let its downloader
+        # and extractor classify retryable failures instead of retrying every
+        # DownloadError (which also covers unavailable/private videos).
+        "retries": configuration.max_tries - 1,
+        "fragment_retries": configuration.max_tries - 1,
+        "extractor_retries": configuration.max_tries - 1,
+        "file_access_retries": 0,
+        "skip_unavailable_fragments": False,
+        "retry_sleep_functions": {
+            kind: lambda n: min(2 ** n, 30)
+            for kind in ("http", "fragment", "extractor")
+        },
         "postprocessors": [
             {
                 "key": "FFmpegExtractAudio",
@@ -305,6 +347,9 @@ def main():
             spotify_url="https://open.spotify.com/track/6eIdYm2beEFXDadXRCipHb",
             name="Sukiyo Two hearts",
             metadata_overrides=SongMetaData(artist="allah pepe")
+        ),
+        SongInfo(
+            youtube_url="https://www.youtube.com/watch?v=g89-7dQMMjY"
         )
     ]
     # pprint(get_available_qualities(x[0]))
