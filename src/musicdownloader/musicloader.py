@@ -34,16 +34,32 @@ def read_music_files_from_folder(folder: Path | str) -> list[SongInfo]:
             songs.extend(read_music_file_toml(file))
     return songs
 
-def write_music_file_toml(file: Path | str, song_contents: list[SongInfo]):
+def write_music_file_toml(file: Path | str | None, song_contents: list[SongInfo], mode: Literal['w', 'a'] = 'w'):
+    """
+    Writes songs to a toml file.
+    Pass in None to print to the standard output
+    'a' appends to a file, while 'w' overwrites it completely
+    """
+    song_contents = SongList(song=song_contents)
+    song_contents = asdict(song_contents, dict_factory=ignore_none_factory)
+    toml_string = tomli_w.dumps(song_contents)
+    if file is None:
+        print(toml_string)
+        return 
     file = Path(file) if isinstance(file, str) else file 
     if file.is_dir():
         raise ValueError("Given a folder directory instead of a file")
     if not file.parent.exists():
         file.parent.mkdir(parents=True, exist_ok=True)
-    song_contents = SongList(song=song_contents)
-    song_contents = asdict(song_contents, dict_factory=ignore_none_factory)
-    with open(file, 'wb') as f:
-        tomli_w.dump(song_contents, f)
+    if mode == 'w':
+        with open(file, 'wb') as f:
+            tomli_w.dump(song_contents, f)
+        pass 
+    elif mode == 'a':
+        with open(file, 'a+') as f:
+            f.write("\n" + toml_string)
+    else:
+        raise ValueError(f"Invalid mode received: {mode}")
 
 def read_music_file_json(file: Path | str) -> list[SongInfo]:
     with open(file, 'r', encoding='utf-8') as file:

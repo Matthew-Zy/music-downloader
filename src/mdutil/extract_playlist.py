@@ -1,5 +1,8 @@
+from pathlib import Path
+
 import yt_dlp
 from musicdownloader.musicloader import write_music_file_toml, read_music_file_toml
+
 from musicdownloader.songloader import SongInfo 
 
 def get_yt_music_tracks_with_titles(playlist_url):
@@ -29,37 +32,35 @@ def get_yt_music_tracks_with_titles(playlist_url):
             return []
 
 
-def yt_music_tracks_to_toml(playlist_url, file_output):
+def yt_music_tracks_to_toml(playlist_url: str, file_output: str | Path):
     converted = get_yt_music_tracks_with_titles(playlist_url)
     if len(converted) == 0:
         print("failed to convert playlist")
         return 
-    songs: list[SongInfo] = []
+    recv_songs: list[SongInfo] = []
     for s in converted:
-        songs.append(SongInfo(
+        recv_songs.append(SongInfo(
             youtube_url=s.get("url"),
             name=s.get("title")
         ))
-        # me when infinite iq
-        if file_output is None:
-            print("[[song]]")
-            print(f"youtube_url={s.get("url")}")
-            print(f"name={s.get("title")}")
-            print("")
-    
-    if file_output is not None:
+    if file_output is None:
+        write_music_file_toml(None, recv_songs)
+    elif file_output:
         try:
             existing = read_music_file_toml(file_output)
-            for s in songs:
-                if s in existing:
-                    continue 
-                else:
-                    existing.append(s)
         except FileNotFoundError:
-            existing = songs 
+            existing = [] 
             pass
-        write_music_file_toml(file_output, existing)
-        print(f"Sucessfully written to: {file_output}")
+        actual_new_songs: list[SongInfo] = []
+        for s in recv_songs:
+            if s not in existing:
+                actual_new_songs.append(s)
+        if len(actual_new_songs) <= 0:
+            print(f"No new songs were added to existing {file_output} file")
+        else:
+            write_music_file_toml(file_output, actual_new_songs, mode="a")
+            print(f"Sucessfully written to: {file_output}")
+
 
 if __name__ == "__main__":
     yt_music_playlist = "https://music.youtube.com/playlist?list=PLaOgDfABCiaY"
@@ -69,4 +70,3 @@ if __name__ == "__main__":
     for track in tracks:
         print(f"Title: {track['title']}")
         print(f"Link:  {track['url']}\n")
-        
