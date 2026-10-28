@@ -1,0 +1,38 @@
+#
+#
+#
+
+[[song]]
+name = "Sukiyo Two Hearts"
+youtube_url = "https://music.youtube.com/watch?v=Oqrswo5KlCU"
+
+[[song]]
+name = "Three Feelings ~ Kimi ga Sukin"
+youtube_url = "https://music.youtube.com/watch?v=ypUrI24vHLk"
+
+[[song]]
+name = "Love Four U"
+youtube_url = "https://music.youtube.com/watch?v=woYQvBfy7ag"
+
+[[song]]
+name = "Lesson Five"
+youtube_url = "https://music.youtube.com/watch?v=FYxw8iA4b2w"
+
+[[song]]
+name = "Sukiyo Two Hearts Instrumental"
+youtube_url = "https://music.youtube.com/watch?v=wgs15n77mxI"
+
+[[song]]
+name = "Gotoubon no Kimochi"
+youtube_url = "https://music.youtube.com/watch?v=SdkPlkxfwCU"
+
+[[song]]
+name = "Gotoubon no Katachi"
+youtube_url = "https://music.youtube.com/watch?v=eWmyPgluj2U"
+
+[[song]]
+name = "Sign TQQ ending - English Version"
+youtube_url = "https://www.youtube.com/watch?v=g89-7dQMMjY"
+[song.metadata_overrides]
+title = "[Gotoubun no Hanayome ED 1] Sign (English Cover)"
+artist = ["Chiisana", "Lunarveil", "Spiral", "Shiena", "Saki"]

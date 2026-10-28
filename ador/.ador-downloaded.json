@@ -1,0 +1,88 @@
+{
+    "song": [
+        {
+            "youtube_url": "https://music.youtube.com/watch?v=wgs15n77mxI",
+            "name": "Sukiyo Two Hearts Instrumental",
+            "quality": {
+                "bitrate_kbps": 257.263,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        },
+        {
+            "youtube_url": "https://music.youtube.com/watch?v=SdkPlkxfwCU",
+            "name": "Gotoubon no Kimochi",
+            "quality": {
+                "bitrate_kbps": 257.915,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        },
+        {
+            "youtube_url": "https://music.youtube.com/watch?v=eWmyPgluj2U",
+            "name": "Gotoubon no Katachi",
+            "quality": {
+                "bitrate_kbps": 255.777,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        },
+        {
+            "youtube_url": "https://music.youtube.com/watch?v=Oqrswo5KlCU",
+            "name": "Sukiyo Two Hearts",
+            "quality": {
+                "bitrate_kbps": 253.673,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        },
+        {
+            "youtube_url": "https://music.youtube.com/watch?v=ypUrI24vHLk",
+            "name": "Three Feelings ~ Kimi ga Sukin",
+            "quality": {
+                "bitrate_kbps": 263.556,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        },
+        {
+            "youtube_url": "https://music.youtube.com/watch?v=woYQvBfy7ag",
+            "name": "Love Four U",
+            "quality": {
+                "bitrate_kbps": 264.304,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        },
+        {
+            "youtube_url": "https://music.youtube.com/watch?v=FYxw8iA4b2w",
+            "name": "Lesson Five",
+            "quality": {
+                "bitrate_kbps": 250.569,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        }
+    ]
+}

@@ -1,0 +1,64 @@
+{
+    "song": [
+        {
+            "youtube_url": "https://music.youtube.com/watch?v=JwlHM8TvFE4",
+            "name": "Everybody Talks",
+            "quality": {
+                "bitrate_kbps": 257.994,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        },
+        {
+            "youtube_url": "https://music.youtube.com/watch?v=Dy_eP-mqWow",
+            "name": "Iris",
+            "quality": {
+                "bitrate_kbps": 267.684,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        },
+        {
+            "youtube_url": "https://music.youtube.com/watch?v=dH7pJy-VcTA",
+            "name": "Black Balloon",
+            "quality": {
+                "bitrate_kbps": 261.277,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        },
+        {
+            "youtube_url": "https://music.youtube.com/watch?v=i-kHleNYIDc",
+            "name": "Better Days",
+            "quality": {
+                "bitrate_kbps": 259.184,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        },
+        {
+            "youtube_url": "https://music.youtube.com/watch?v=MUZwblurraA",
+            "name": "I'm Still Here",
+            "quality": {
+                "bitrate_kbps": 263.668,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        }
+    ]
+}
