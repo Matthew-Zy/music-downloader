@@ -1,4 +1,6 @@
-# Yes
+# Synopsis on a format
+# The only mandatory field in each [[song]] object is the youtube_url. The name field is purely cosmetic.
+# 
 
 [[song]]
 name = "Everybody Talks"

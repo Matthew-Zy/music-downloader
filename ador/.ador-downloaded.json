@@ -1,42 +1,6 @@
 {
     "song": [
         {
-            "youtube_url": "https://music.youtube.com/watch?v=wgs15n77mxI",
-            "name": "Sukiyo Two Hearts Instrumental",
-            "quality": {
-                "bitrate_kbps": 257.263,
-                "channels": 2,
-                "codec": "opus",
-                "ext": "opus",
-                "format_id": "774",
-                "sample_rate_hz": 48000
-            }
-        },
-        {
-            "youtube_url": "https://music.youtube.com/watch?v=SdkPlkxfwCU",
-            "name": "Gotoubon no Kimochi",
-            "quality": {
-                "bitrate_kbps": 257.915,
-                "channels": 2,
-                "codec": "opus",
-                "ext": "opus",
-                "format_id": "774",
-                "sample_rate_hz": 48000
-            }
-        },
-        {
-            "youtube_url": "https://music.youtube.com/watch?v=eWmyPgluj2U",
-            "name": "Gotoubon no Katachi",
-            "quality": {
-                "bitrate_kbps": 255.777,
-                "channels": 2,
-                "codec": "opus",
-                "ext": "opus",
-                "format_id": "774",
-                "sample_rate_hz": 48000
-            }
-        },
-        {
             "youtube_url": "https://music.youtube.com/watch?v=Oqrswo5KlCU",
             "name": "Sukiyo Two Hearts",
             "quality": {
@@ -81,6 +45,64 @@
                 "codec": "opus",
                 "ext": "opus",
                 "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        },
+        {
+            "youtube_url": "https://music.youtube.com/watch?v=wgs15n77mxI",
+            "name": "Sukiyo Two Hearts Instrumental",
+            "quality": {
+                "bitrate_kbps": 257.263,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        },
+        {
+            "youtube_url": "https://music.youtube.com/watch?v=SdkPlkxfwCU",
+            "name": "Gotoubon no Kimochi",
+            "quality": {
+                "bitrate_kbps": 257.915,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        },
+        {
+            "youtube_url": "https://music.youtube.com/watch?v=eWmyPgluj2U",
+            "name": "Gotoubon no Katachi",
+            "quality": {
+                "bitrate_kbps": 255.777,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "774",
+                "sample_rate_hz": 48000
+            }
+        },
+        {
+            "youtube_url": "https://www.youtube.com/watch?v=g89-7dQMMjY",
+            "name": "Sign TQQ ending - English Version",
+            "metadata_overrides": {
+                "title": "[Gotoubun no Hanayome ED 1] Sign (English Cover)",
+                "artist": [
+                    "Chiisana",
+                    "Lunarveil",
+                    "Spiral",
+                    "Shiena",
+                    "Saki"
+                ]
+            },
+            "quality": {
+                "bitrate_kbps": 130.218,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "251",
                 "sample_rate_hz": 48000
             }
         }
