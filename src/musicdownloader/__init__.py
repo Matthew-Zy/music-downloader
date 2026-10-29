@@ -26,6 +26,11 @@ def parse_args() -> dict[str, any]:
         help="Check previously downloaded songs for quality upgrades (ignored with --all)",
     )
     parser.add_argument("-r", "--retries", type=int, default=config.DEFAULT_MAX_TRIES, help="Maximum retries for failing to download a song")
+    parser.add_argument(
+        "--check-metadata-changes", action=BooleanOptionalAction,
+        default=config.DEFAULT_CHECK_METADATA_CHANGES,
+        help="Redownload songs when metadata overrides differ from saved records",
+    )
     
     cookies = parser.add_mutually_exclusive_group()
     cookies.add_argument(
@@ -78,6 +83,7 @@ def download_from_source_folder(args: dict[str, any]):
             configuration = config.DownloadConfig(
                 download_all=args.all,
                 check_quality_increase=args.check_quality_increase,
+                check_metadata_changes=args.check_metadata_changes,
                 output_folder=source.parent,
                 max_tries=args.retries,
                 cookies=args.cookies,
@@ -127,6 +133,7 @@ def main() -> None:
         configuration: config.DownloadConfig = config.DownloadConfig(
             download_all=args.all,
             check_quality_increase=args.check_quality_increase,
+            check_metadata_changes=args.check_metadata_changes,
             output_folder=args.output_folder,
             max_tries=args.retries,
             cookies=args.cookies,

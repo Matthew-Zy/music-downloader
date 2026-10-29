@@ -120,8 +120,8 @@ def download_songs(
 ) -> list[SongInfo]:
     """Return completed and previous records, including after Ctrl+C.
 
-    With download_all, existing records are replaced only by quality upgrades,
-    although equal- and lower-quality audio is still downloaded and tagged.
+    Changed overrides trigger a download when check_metadata_changes is enabled.
+    Successful downloads record their actual quality, including downgrades.
     Previously downloaded songs are checked for upgrades only when
     check_quality_increase is enabled; download_all always downloads them.
     Retry transient failures up to max_tries per operation.
@@ -321,8 +321,13 @@ def download_songs(
             for song in songs:
                 check_cancelled()
                 previous = next((s for s in already_downloaded_songs if s == song), None)
+                metadata_changed = (
+                    configuration.check_metadata_changes
+                    and previous is not None
+                    and song.metadata_overrides != previous.metadata_overrides
+                )
                 try:
-                    if not configuration.download_all and previous is not None:
+                    if not configuration.download_all and previous is not None and not metadata_changed:
                         if not configuration.check_quality_increase:
                             continue
                         info = ydl.extract_info(song.youtube_url, download=False)
@@ -380,15 +385,17 @@ def download_songs(
                         sample_rate_hz=downloaded.get("asr"),
                     ),
                 )
-                if configuration.download_all and previous is not None:
+                if previous is not None:
                     new_quality = asdict(record.quality)
                     old_quality = asdict(previous.quality) if previous.quality else {}
-                    if not is_better_quality(new=new_quality, old=old_quality, ydl=ydl):
-                        if is_better_quality(new=old_quality, old=new_quality, ydl=ydl):
-                            print(
-                                f"\033[31mWARNING: {song.youtube_url} was downloaded at lower quality "
-                                "than previously recorded; keeping the previous saved entry.\033[0m"
-                            )
+                    if is_better_quality(new=old_quality, old=new_quality, ydl=ydl):
+                        print(
+                            f"\033[31mWARNING: {song.youtube_url} was downloaded at lower quality "
+                            "than previously recorded; saving the actual downloaded quality.\033[0m"
+                        )
+                    elif configuration.download_all and not metadata_changed and not is_better_quality(
+                        new=new_quality, old=old_quality, ydl=ydl,
+                    ):
                         record = previous
                 downloaded_songs.append(record)
 

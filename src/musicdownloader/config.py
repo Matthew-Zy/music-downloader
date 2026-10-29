@@ -9,6 +9,7 @@ DEFAULT_OUTPUT_FOLDER: Path = DEFAULT_FILE_LOCATION.parent / DEFAULT_FILE_LOCATI
 DEFAULT_PREV_STORE_LOCATION: Path = DEFAULT_FILE_LOCATION.parent / f"{DEFAULT_FILE_LOCATION.stem}-downloaded.json"
 DEFAULT_DOWNLOAD_ALL: bool = False
 DEFAULT_CHECK_QUALITY_INCREASE: bool = True
+DEFAULT_CHECK_METADATA_CHANGES: bool = False
 DEFAULT_MAX_TRIES: int = 5
 DEFAULT_COOKIES_BROWSER: str = "firefox"
 
@@ -20,6 +21,7 @@ class DownloadConfig:
     cookies: Optional[str] = None 
     browser_cookies: Optional[str] = DEFAULT_COOKIES_BROWSER
     check_quality_increase: bool = DEFAULT_CHECK_QUALITY_INCREASE
+    check_metadata_changes: bool = DEFAULT_CHECK_METADATA_CHANGES
 
     def cookie_options(self) -> dict:
         """Translate the selected cookie source into yt-dlp options."""
