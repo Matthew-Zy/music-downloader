@@ -26,6 +26,7 @@ def parse_args() -> dict[str, any]:
 
 
 def main():
+    actions = 0
     args = parse_args()
 #    print(args)
 
@@ -34,8 +35,18 @@ def main():
             extract_playlist.yt_music_tracks_to_toml(args.extract_playlist, args.output)
         elif "spotify" in args.extract_playlist.lower():
             print("Implementation for spotify does not exist yet.... (TBD)")
+        else:
+            print(f"'{args.extract_playlist}' is not a valid/supported playlist.")
+        actions += 1
 
     if args.remove_music:
         audio_funcs.rm_audio(args.remove_music)
+        actions += 1
     if args.playlist_sizes:
         audio_funcs.playlist_lengths(args.playlist_sizes)
+        actions += 1
+
+    if actions <= 0:
+        print(f"{actions} actions completed, please use -h or --help for help")
+    else:
+        print(f"Completed {actions} action(s)")

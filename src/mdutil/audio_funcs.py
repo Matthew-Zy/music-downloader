@@ -10,7 +10,10 @@ AUDIO_EXTENSIONS = [".opus", ".webm", ".mp3", ".wav", ".aac"]
 def dfs_files(folder: Path | str, func_action: callable[any] = print):
     if isinstance(folder, str):
         folder = Path(folder)
-    if folder.is_file() or not folder.exists():
+    if folder.is_file():
+        func_action(folder)
+        return 
+    elif not folder.exists():
         print(f'folder: "{folder}" does not exist')
         return 
      
@@ -41,7 +44,8 @@ def playlist_lengths(path: Path | str):
                 if duplicate_url in lines[i]:
                     instance += 1
                     print(f"[{playlist_file.name}]:[{i+1}] Instance {instance} of duplicate url {duplicate_url}")
-                pass
+            pass
+
         if playlist_file.suffix != ".toml":
             return
         songs = read_music_file_toml(playlist_file)
@@ -55,7 +59,7 @@ def playlist_lengths(path: Path | str):
             unique += 1
             seen.append(s)
             
-        print(f"{playlist_file.name:<12}-{len(songs):>3} Total; {unique:>3} Uniques; {(len(songs)-unique):>3} Duplicates")
+        print(f"{playlist_file.name:<12}-{len(songs):>3} Total; {unique:>3} Uniques; {(len(songs)-unique):>3} Duplicates;")
 
     path = Path(path) if isinstance(path, str) else path
     if path.is_file():
