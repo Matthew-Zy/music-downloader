@@ -105,6 +105,34 @@
                 "format_id": "251",
                 "sample_rate_hz": 48000
             }
+        },
+        {
+            "youtube_url": "https://www.youtube.com/watch?v=vpb8sb198Ik",
+            "name": "Gotoubon no Kimochi - English Cover",
+            "metadata_overrides": {
+                "title": "[Gotoubun no Hanayome OP 1] Gotoubun no Kimochi (English Cover)",
+                "artist": [
+                    "Z3N",
+                    "Lunarveil",
+                    "Spiral",
+                    "Shiena",
+                    "Saki",
+                    "Ryuuki",
+                    "Michiko"
+                ],
+                "year": 2022,
+                "comment": "This cover is fantastico",
+                "bpm": 175,
+                "lyrics": "TODO!!! (do it eventually)"
+            },
+            "quality": {
+                "bitrate_kbps": 131.313,
+                "channels": 2,
+                "codec": "opus",
+                "ext": "opus",
+                "format_id": "251",
+                "sample_rate_hz": 48000
+            }
         }
     ]
 }

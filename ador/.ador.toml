@@ -31,7 +31,7 @@ name = "Gotoubon no Katachi"
 youtube_url = "https://music.youtube.com/watch?v=eWmyPgluj2U"
 
 [[song]]
-name = "Sign TQQ ending - English Cover"
+name = "Sign - TQQ ending - English Cover"
 youtube_url = "https://www.youtube.com/watch?v=g89-7dQMMjY"
 [song.metadata_overrides]
 title = "[Gotoubun no Hanayome ED 1] Sign (English Cover)"
@@ -41,7 +41,9 @@ album = "Ephemera"
 track_number = 9
 year = 2022
 comment = "This cover is goated..."
-lyrics = "TODO!!!"
+lyrics = """Something in this feeling,
+Something is Revealing,
+"""
 
 [[song]]
 name = "Gotoubon no Kimochi - English Cover"
