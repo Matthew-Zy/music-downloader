@@ -1,35 +1,35 @@
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 
-import yt_dlp
+from ytmusicapi import YTMusic
 from musicdownloader.musicloader import write_music_file_toml, read_music_file_toml
 
 from musicdownloader.songloader import SongInfo 
 
 def get_yt_music_tracks_with_titles(playlist_url):
-    ydl_opts = {
-        'extract_flat': True,  # Rapidly grabs metadata without full video parsing
-        'skip_download': True,
-        'quiet': True,
-    }
-    
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        try:
-            result = ydl.extract_info(playlist_url, download=False)
-            
-            if 'entries' in result:
-                # Extract both the 'title' and 'id' fields from each entry
-                return [
-                    {
-                        "title": entry.get("title"),
-                        "url": f"https://music.youtube.com/watch?v={entry.get('id')}"
-                    }
-                    for entry in result['entries'] if entry
-                ]
-            return []
-            
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            return []
+    """Return public playlist tracks with titles and comma-separated artists."""
+    try:
+        playlist_ids = parse_qs(urlparse(playlist_url).query).get("list")
+        if not playlist_ids:
+            raise ValueError("Playlist URL must include a nonempty list parameter")
+
+        playlist = YTMusic().get_playlist(playlist_ids[0], limit=None)
+        return [
+            {
+                "title": track.get("title"),
+                "artist": ", ".join(
+                    artist["name"]
+                    for artist in (track.get("artists") or [])
+                    if artist.get("name")
+                ),
+                "url": f"https://music.youtube.com/watch?v={track['videoId']}",
+            }
+            for track in playlist.get("tracks", [])
+            if track and track.get("videoId")
+        ]
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return []
 
 
 def yt_music_tracks_to_toml(playlist_url: str, file_output: str | Path):
@@ -41,7 +41,7 @@ def yt_music_tracks_to_toml(playlist_url: str, file_output: str | Path):
     for s in converted:
         recv_songs.append(SongInfo(
             youtube_url=s.get("url"),
-            name=s.get("title")
+            name=f'{s.get("artist", "")} - {s.get("title", "")}'
         ))
     if file_output is None:
         write_music_file_toml(None, recv_songs)
@@ -69,4 +69,5 @@ if __name__ == "__main__":
     print(f"Extracted {len(tracks)} tracks:\n")
     for track in tracks:
         print(f"Title: {track['title']}")
-        print(f"Link:  {track['url']}\n")
+        print(f"Link:  {track['url']}")
+        print(f"Artist(s): {track['artist']}\n")
