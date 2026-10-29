@@ -263,6 +263,8 @@ youtube_url = "https://music.youtube.com/watch?v=oEeet9t--tI"
 [[song]]
 name = "Sabrina Carpenter - Good Luck, Babe! (Live Lounge cover)"
 youtube_url = "https://music.youtube.com/watch?v=io0UQ74sXfw"
+[song.metadata_overrides]
+album = "Good Luck, Babe! - Sabrina Carpenter Cover"
 
 [[song]]
 name = "Sabrina Carpenter - Please Please Please"
