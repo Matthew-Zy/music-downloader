@@ -10,6 +10,8 @@ wheels/
 .venv
 
 music/
+playlist/
+
 test/
 tests/
 songs/
