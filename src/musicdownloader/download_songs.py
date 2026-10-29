@@ -120,7 +120,8 @@ def download_songs(
 ) -> list[SongInfo]:
     """Return completed and previous records, including after Ctrl+C.
 
-    New records take precedence by URL, even with download_all enabled.
+    With download_all, existing records are replaced only by quality upgrades,
+    although equal- and lower-quality audio is still downloaded and tagged.
     Previously downloaded songs are checked for upgrades only when
     check_quality_increase is enabled; download_all always downloads them.
     Retry transient failures up to max_tries per operation.
@@ -282,7 +283,8 @@ def download_songs(
         "outtmpl": str(Path(configuration.output_folder) / "%(title)s.%(ext)s"),
         "noplaylist": True,
         **configuration.cookie_options(),
-        "force_overwrites": True,
+        "overwrites": True,
+        "continuedl": False,
         "remote_components": ["ejs:github"],
         "ignoreerrors": False,
         "js_runtimes": {"node": {}},
@@ -365,7 +367,7 @@ def download_songs(
                 except (mutagen.MutagenError, OSError, ValueError, KeyError) as exc:
                     ydl.report_warning(f"Downloaded audio, but could not write music tags: {exc}")
 
-                downloaded_songs.append(replace(
+                record = replace(
                     song,
                     name=song.name or metadata.get("title") or info.get("title"),
                     metadata_overrides=deepcopy(song.metadata_overrides),
@@ -377,12 +379,23 @@ def download_songs(
                         format_id=downloaded.get("format_id"),
                         sample_rate_hz=downloaded.get("asr"),
                     ),
-                ))
+                )
+                if configuration.download_all and previous is not None:
+                    new_quality = asdict(record.quality)
+                    old_quality = asdict(previous.quality) if previous.quality else {}
+                    if not is_better_quality(new=new_quality, old=old_quality, ydl=ydl):
+                        if is_better_quality(new=old_quality, old=new_quality, ydl=ydl):
+                            print(
+                                f"\033[31mWARNING: {song.youtube_url} was downloaded at lower quality "
+                                "than previously recorded; keeping the previous saved entry.\033[0m"
+                            )
+                        record = previous
+                downloaded_songs.append(record)
 
     except (KeyboardInterrupt, _DownloadCancelled):
         print("\nDownload interrupted; returning completed and previous downloads.")
 
-    # Keep completed records first; retain previous records for skipped,
+    # Keep selected records first; retain previous records for skipped,
     # failed, interrupted, or unvisited songs regardless of download_all.
     merged = {song.youtube_url: song for song in downloaded_songs}
     for song in already_downloaded_songs:
