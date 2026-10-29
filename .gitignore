@@ -12,3 +12,5 @@ wheels/
 music/
 test/
 tests/
+songs/
+fat.toml
