@@ -36,6 +36,12 @@ youtube_url = "https://www.youtube.com/watch?v=g89-7dQMMjY"
 [song.metadata_overrides]
 title = "[Gotoubun no Hanayome ED 1] Sign (English Cover)"
 artist = ["Chiisana", "Lunarveil", "Spiral", "Shiena", "Saki"]
+bpm = 102 
+album = "Ephemera"
+track_number = 9
+year = 2022
+comment = "This cover is goated..."
+lyrics = "TODO!!!"
 
 [[song]]
 name = "Gotoubon no Kimochi - English Cover"
@@ -43,3 +49,9 @@ youtube_url = "https://www.youtube.com/watch?v=vpb8sb198Ik"
 [song.metadata_overrides]
 title = "[Gotoubun no Hanayome OP 1] Gotoubun no Kimochi (English Cover)"
 artist = ["Z3N", "Lunarveil", "Spiral", "Shiena", "Saki", "Ryuuki", "Michiko"]
+bpm = 175
+year = 2022
+comment = "This cover is fantastico"
+lyrics = "TODO!!! (do it eventually)"
+
+

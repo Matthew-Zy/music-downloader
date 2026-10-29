@@ -1,23 +1,293 @@
 # Synopsis on a format
 # The only mandatory field in each [[song]] object is the youtube_url. The name field is purely cosmetic.
-# 
+#
+
+# Ace of Base
 
 [[song]]
-name = "Everybody Talks"
-youtube_url = "https://music.youtube.com/watch?v=JwlHM8TvFE4"
+name = "Ace of Base - All for You - Radio Version"
+youtube_url = "https://music.youtube.com/watch?v=Tz5Pi6fjArY"
+
+# The All-American Rejects
 
 [[song]]
-name = "Iris"
-youtube_url = "https://music.youtube.com/watch?v=Dy_eP-mqWow"
+name = "The All-American Rejects - Dirty Little Secret"
+youtube_url = "https://music.youtube.com/watch?v=CBQsLKcLeUU"
+
+# Avril Lavigne
 
 [[song]]
-name = "Black Balloon"
-youtube_url = "https://music.youtube.com/watch?v=dH7pJy-VcTA"
+name = "Avril Lavigne - I'm with You"
+youtube_url = "https://music.youtube.com/watch?v=_qHWIvq_WR4"
+
+[[song]]
+name = "Avril Lavigne - Keep Holding On"
+youtube_url = "https://music.youtube.com/watch?v=5VRVPHWI9Dc"
+
+[[song]]
+name = "Avril Lavigne - When You're Gone"
+youtube_url = "https://music.youtube.com/watch?v=9ep1pjnt2nI"
+
+[[song]]
+name = "Avril Lavigne - Sk8er Boi"
+youtube_url = "https://music.youtube.com/watch?v=UYocLBXr7hQ"
+
+# B.o.B
+
+[[song]]
+name = "B.o.B, Hayley Williams - Airplanes (feat. Hayley Williams of Paramore)"
+youtube_url = "https://music.youtube.com/watch?v=pfEZW-1eDl8"
+
+# blink-182
+
+[[song]]
+name = "blink-182 - I Miss You"
+youtube_url = "https://music.youtube.com/watch?v=tSH4jIh1HWQ"
+
+# Bryan Adams
+[[song]]
+name = "Bryan Adams"
+youtube_url = "https://music.youtube.com/watch?v=IOqXiyqNAnU"
+
+# Carly Rae Jepsen
+
+[[song]]
+name = "Carly Rae Jepsen - I Really Like You"
+youtube_url = "https://music.youtube.com/watch?v=qV5lzRHrGeg"
+
+# The Chalkeaters
+
+[[song]]
+name = "The Chalkeaters, M-G UniNew, Nekro G - Bowsette"
+youtube_url = "https://music.youtube.com/watch?v=XyL-beZoqos"
+
+# Coldplay
+
+[[song]]
+name = "Coldplay - Clocks"
+youtube_url = "https://music.youtube.com/watch?v=8Xv_Hg8o1fw"
+
+# Cyberpunk
+
+[[song]]
+name = "Rosa Waltons - I really want to stay at your house"
+youtube_url = "https://music.youtube.com/watch?v=Rbgw_rduQpM"
+
+[[song]]
+name = "Josh Cravey - I really want to stay at your house - Rock cover"
+youtube_url = "https://music.youtube.com/watch?v=6SJw6fIgEVg"
+
+# The Fray
+
+[[song]]
+name = "The Fray - How to Save a Life"
+youtube_url = "https://music.youtube.com/watch?v=ae7AACP1-R0"
+
+# fun.
+
+[[song]]
+name = "fun., Janelle Monáe - We Are Young (feat. Janelle Monáe)"
+youtube_url = "https://music.youtube.com/watch?v=f_K_0SNaRk0"
+
+# Goo Goo Dolls
 
 [[song]]
 name = "Better Days"
 youtube_url = "https://music.youtube.com/watch?v=i-kHleNYIDc"
 
 [[song]]
+name = "Black Balloon"
+youtube_url = "https://music.youtube.com/watch?v=dH7pJy-VcTA"
+
+[[song]]
+name = "Iris"
+youtube_url = "https://music.youtube.com/watch?v=Dy_eP-mqWow"
+
+[[song]]
+name = "Sympathy"
+youtube_url = "https://music.youtube.com/watch?v=ISz4fiLmoKM"
+
+[[song]]
+name = "Name"
+youtube_url = "https://music.youtube.com/watch?v=sQxszQ9BsxM"
+
+[[song]]
+name = "All That You Are"
+youtube_url = "https://music.youtube.com/watch?v=mdbQej8HQDc"
+
+
+# Hoobastank
+
+[[song]]
+name = "Hoobastank - The Reason"
+youtube_url = "https://music.youtube.com/watch?v=qQ0zxuWFxrY"
+
+# James Blunt
+
+[[song]]
+name = "James Blunt - You're Beautiful"
+youtube_url = "https://music.youtube.com/watch?v=9piyWrfULSk"
+
+# John Rzeznik
+
+[[song]]
 name = "I'm Still Here"
 youtube_url = "https://music.youtube.com/watch?v=MUZwblurraA"
+
+# Journey
+
+[[song]]
+name = "Journey - Don't Stop Believin'"
+youtube_url = "https://music.youtube.com/watch?v=mM3Vmn4pdog"
+
+# Keane
+
+[[song]]
+name = "Keane - Somewhere Only We Know"
+youtube_url = "https://music.youtube.com/watch?v=q5sVys7jk2I"
+
+# Kevin Temmer
+
+[[song]]
+name = "Kevin Temmer - Third Act Misunderstanding"
+youtube_url = "https://music.youtube.com/watch?v=fsxIU7m62Kw"
+
+[[song]]
+name = "Kevin Temmer - I've had a Dream for quite some time"
+youtube_url = "https://music.youtube.com/watch?v=tjlBZGWvxtA"
+
+[[song]]
+name = "Kevin Temmer - The Student Loans Song"
+youtube_url = "https://music.youtube.com/watch?v=GLa2wwyImK0"
+
+# Taylor Swift
+
+[[song]]
+name = "Taylor Swift - Cruel Summer"
+youtube_url = "https://music.youtube.com/watch?v=aC9HkZW2hZk"
+
+[[song]]
+name = "Taylor Swift - You Belong with Me - Taylor's Edition"
+youtube_url = "https://music.youtube.com/watch?v=uD8d1KrDQcY"
+
+[[song]]
+name = "Taylor Swift - Love Story"
+youtube_url = "https://music.youtube.com/watch?v=adrGakL11Ss"
+
+# The Killers
+
+[[song]]
+name = "The Killers - Mr. Brightside"
+youtube_url = "https://music.youtube.com/watch?v=m2zUrruKjDQ"
+
+[[song]]
+name = "The Killers - Somebody Told Me"
+youtube_url = "https://music.youtube.com/watch?v=liRMxUT8A2c"
+
+# Linkin Park
+
+[[song]]
+name = "Linkin Park - Numb"
+youtube_url = "https://music.youtube.com/watch?v=Q7cQU86CDB0"
+
+# The Living Tombstone
+
+[[song]]
+name = "The Living Tombstone - Can't Wait"
+youtube_url = "https://music.youtube.com/watch?v=gv7QwZqMFYc"
+
+[[song]]
+name = "The Living Tombstone, Eurobeat Brony - Discord"
+youtube_url = "https://music.youtube.com/watch?v=5Z56MZFMp0k"
+
+# Maroon 5
+
+[[song]]
+name = "Maroon 5 - She Will Be Loved - Radio Mix"
+youtube_url = "https://music.youtube.com/watch?v=yfd_d0m46q0"
+
+[[song]]
+name = "Maroon 5 - Sugar"
+youtube_url = "https://music.youtube.com/watch?v=abQKzZD7H5Q"
+
+[[song]]
+name = "Maroon 5 - Payphone"
+youtube_url = "https://music.youtube.com/watch?v=psWZhQIk8G4"
+
+[[song]]
+name = "Maroon 5 - Animals"
+youtube_url = "https://music.youtube.com/watch?v=YSWrmX4_qFA"
+
+[[song]]
+name = "Maroon 5 - Misery"
+youtube_url = "https://music.youtube.com/watch?v=qHCHVHkTpbo"
+
+# Nakano Nino (CV: Ayana Taketatsu)
+
+[[song]]
+name = "Nakano Nino (CV: Ayana Taketatsu) - Sukiyo -Two Hearts- (Instrumental)"
+youtube_url = "https://music.youtube.com/watch?v=wgs15n77mxI"
+
+# Neon Trees
+
+[[song]]
+name = "Everybody Talks"
+youtube_url = "https://music.youtube.com/watch?v=JwlHM8TvFE4"
+
+# Nickelback
+
+[[song]]
+name = "Nickelback - How You Remind Me"
+youtube_url = "https://music.youtube.com/watch?v=vkvrbbtnp6s"
+
+# Owl City
+
+[[song]]
+name = "Owl City - Fireflies"
+youtube_url = "https://music.youtube.com/watch?v=KWLGyeg74es"
+
+# Paramore
+
+[[song]]
+name = "Paramore - Still into You"
+youtube_url = "https://music.youtube.com/watch?v=tv7yHglIDsc"
+
+# Plain White T's
+
+[[song]]
+name = "Plain White T's - Hey There Delilah"
+youtube_url = "https://music.youtube.com/watch?v=oEeet9t--tI"
+
+# Sabrina Carpenter
+
+[[song]]
+name = "Sabrina Carpenter - Good Luck, Babe! (Live Lounge cover)"
+youtube_url = "https://music.youtube.com/watch?v=io0UQ74sXfw"
+
+[[song]]
+name = "Sabrina Carpenter - Please Please Please"
+youtube_url = "https://music.youtube.com/watch?v=62yox0F5lcA"
+
+[[song]]
+name = "Sabrina Carpenter - Manchild"
+youtube_url = "https://music.youtube.com/watch?v=BlTopk-muo4"
+
+[[song]]
+name = "Sabrina Carpenter - Tears"
+youtube_url = "https://music.youtube.com/watch?v=ZIrJN3XyZns"
+
+[[song]]
+name = "Sabrina Carpenter - Taste"
+youtube_url = "https://music.youtube.com/watch?v=-5GI38vWew8"
+
+# The Script
+
+[[song]]
+name = "The Script - The Man Who Can't Be Moved"
+youtube_url = "https://music.youtube.com/watch?v=uAYUfGWD9SM"
+
+# Sixpence None The Richer
+
+[[song]]
+name = "Sixpence None The Richer - Kiss Me"
+youtube_url = "https://music.youtube.com/watch?v=K2tbQ_g2VbQ"
