@@ -85,14 +85,6 @@ youtube_url = "https://music.youtube.com/watch?v=BrkCMvGpf38"
 name = "ABBA - As Good As New"
 
 [[song]]
-youtube_url = "https://music.youtube.com/watch?v=0X2mn7Sk9lQ"
-name = "ABBA - Voulez-Vous"
-
-[[song]]
-youtube_url = "https://music.youtube.com/watch?v=LxBbX9IdA2Y"
-name = "ABBA - I Have A Dream"
-
-[[song]]
 youtube_url = "https://music.youtube.com/watch?v=GHddJnNo_BQ"
 name = "ABBA - Angeleyes"
 
@@ -101,16 +93,8 @@ youtube_url = "https://music.youtube.com/watch?v=3JWAbEJ4EZU"
 name = "ABBA - The King Has Lost His Crown"
 
 [[song]]
-youtube_url = "https://music.youtube.com/watch?v=PfvAiukymyw"
-name = "ABBA - Does Your Mother Know"
-
-[[song]]
 youtube_url = "https://music.youtube.com/watch?v=ziz_2mIgY04"
 name = "ABBA - If It Wasn't For The Nights"
-
-[[song]]
-youtube_url = "https://music.youtube.com/watch?v=8WyfVoFM9As"
-name = "ABBA - Chiquitita"
 
 [[song]]
 youtube_url = "https://music.youtube.com/watch?v=a02pJY2FauI"
@@ -127,10 +111,6 @@ name = "ABBA - Summer Night City"
 [[song]]
 youtube_url = "https://music.youtube.com/watch?v=U7-1hc2INmQ"
 name = "ABBA - Lovelight"
-
-[[song]]
-youtube_url = "https://music.youtube.com/watch?v=pa2j0Bh83ms"
-name = "ABBA - Gimme! Gimme! Gimme! (A Man After Midnight)"
 
 # Ace of Base
 
