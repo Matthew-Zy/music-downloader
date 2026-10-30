@@ -2,6 +2,14 @@
 # How it feels to chew 5 gum.
 #
 
+ifeq ($(HOME),)
+    HOME := $(USERPROFILE)
+endif
+
+# Fix backslashes for cross-platform safety in Make commands
+HOME := $(subst \,/,$(HOME))
+
+
 PLAYLIST_DIR := music
 ADDITIONAL_FLAGS := ""
 .PHONY: help sync sync-desktop sync-laptop sync-work
@@ -22,7 +30,7 @@ sync:				## Usage: make sync PLAYLIST_DIR=[DIR]. Syncs a given folder containing
 
 
 sync-desktop:		## sync music files for my desktop
-	$(MAKE) sync PLAYLIST_DIR="~/Music/My Music" ADDITIONAL_FLAGS=$(ADDITIONAL_FLAGS)
+	$(MAKE) sync PLAYLIST_DIR="$(HOME)/Music/My Music" ADDITIONAL_FLAGS=$(ADDITIONAL_FLAGS)
 
 
 LAPTOP_PLAYLIST_DIR := "/mnt/D/Music/My Music"
@@ -35,4 +43,4 @@ sync-laptop:		## sync music files for my laptop. Works on both Linux and Windows
 	$(MAKE) sync PLAYLIST_DIR=$(LAPTOP_PLAYLIST_DIR) ADDITIONAL_FLAGS=$(ADDITIONAL_FLAGS)
 
 sync-work:			## sync music files for my work computer
-	$(MAKE) sync PLAYLIST_DIR="~/Music" ADDITIONAL_FLAGS=$(ADDITIONAL_FLAGS)
+	$(MAKE) sync PLAYLIST_DIR="$(HOME)/Music" ADDITIONAL_FLAGS=$(ADDITIONAL_FLAGS)
