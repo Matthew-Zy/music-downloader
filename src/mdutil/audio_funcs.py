@@ -73,6 +73,8 @@ def playlist_lengths(path: Path | str):
         playlist_len(path)
     elif path.is_dir():
         dfs_files(path, playlist_len)
+    else: 
+        print(f'Path: "{path}" does not exist or could not be found')
 
 if __name__ == "__main__":
     rm_audio("test")
