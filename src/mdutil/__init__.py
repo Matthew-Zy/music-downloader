@@ -1,10 +1,23 @@
 import argparse 
+import os
+import sys
 from pathlib import Path
 
 from . import extract_playlist
 from . import audio_funcs 
 
 
+def print_to_terminal(message):
+    # Use 'CON' for Windows and '/dev/tty' for Unix/Linux/macOS
+    tty_device = 'CON' if os.name == 'nt' else '/dev/tty'
+    
+    try:
+        with open(tty_device, 'w', encoding='utf-8') as tty:
+            tty.write(message + '\n')
+    except OSError:
+        # Fallback to stderr if there is no controlling terminal 
+        # (e.g., in a background cron job or some CI/CD pipelines)
+        sys.stderr.write(message + '\n')
 
 
 def parse_args() -> dict[str, any]:
@@ -47,6 +60,6 @@ def main():
         actions += 1
 
     if actions <= 0:
-        print(f"{actions} actions completed, please use -h or --help for help")
+        print_to_terminal(f"{actions} actions completed, please use -h or --help for help")
     else:
-        print(f"Completed {actions} action(s)")
+        print_to_terminal(f"Completed {actions} action(s)")
