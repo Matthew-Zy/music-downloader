@@ -9,7 +9,10 @@ wheels/
 # Virtual environments
 .venv
 
+# symlinks are fun
+music
 music/
+playlist
 playlist/
 
 test/
