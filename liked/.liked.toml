@@ -2,6 +2,136 @@
 # The only mandatory field in each [[song]] object is the youtube_url. The name field is purely cosmetic.
 #
 
+# ABBA
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=OGHZ0a82nwA"
+name = "ABBA - Dancing Queen"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=p_XvUfADo0k"
+name = "ABBA - Knowing Me, Knowing You"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=7fCKrRqT-S8"
+name = "ABBA - Take A Chance On Me"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=JD1CfWre-1Y"
+name = "ABBA - Mamma Mia"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=OeBO5LnCJOI"
+name = "ABBA - Lay All Your Love On Me"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=qfzdTWouhJQ"
+name = "ABBA - Super Trouper"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=20bBnx6V1sQ"
+name = "ABBA - I Have A Dream"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=1cdYITxmHK0"
+name = "ABBA - The Winner Takes It All"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=ivApEf3rqH8"
+name = "ABBA - Money, Money, Money"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=Xmu8UuR_Ki8"
+name = "ABBA - SOS"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=v842-oVWKE0"
+name = "ABBA - Chiquitita"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=FwBcTOHjnXU"
+name = "ABBA - Fernando"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=-ZRpIkdhov4"
+name = "ABBA - Voulez-Vous"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=txS8jis3hr4"
+name = "ABBA - Gimme! Gimme! Gimme! (A Man After Midnight)"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=BotOEyYwjf4"
+name = "ABBA - Does Your Mother Know"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=GjIKNvWwv8Y"
+name = "ABBA - One Of Us"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=DCHC-gVT-dc"
+name = "ABBA - The Name Of The Game"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=opsLfnJKjiM"
+name = "ABBA - Thank You For The Music"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=lEUfkbJbtTA"
+name = "ABBA - Waterloo"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=BrkCMvGpf38"
+name = "ABBA - As Good As New"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=0X2mn7Sk9lQ"
+name = "ABBA - Voulez-Vous"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=LxBbX9IdA2Y"
+name = "ABBA - I Have A Dream"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=GHddJnNo_BQ"
+name = "ABBA - Angeleyes"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=3JWAbEJ4EZU"
+name = "ABBA - The King Has Lost His Crown"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=PfvAiukymyw"
+name = "ABBA - Does Your Mother Know"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=ziz_2mIgY04"
+name = "ABBA - If It Wasn't For The Nights"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=8WyfVoFM9As"
+name = "ABBA - Chiquitita"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=a02pJY2FauI"
+name = "ABBA - Lovers (Live A Little Longer)"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=PGbRTyOo5fY"
+name = "ABBA - Kisses Of Fire"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=JPMqkfMEJ9A"
+name = "ABBA - Summer Night City"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=U7-1hc2INmQ"
+name = "ABBA - Lovelight"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=pa2j0Bh83ms"
+name = "ABBA - Gimme! Gimme! Gimme! (A Man After Midnight)"
+
 # Ace of Base
 
 [[song]]
@@ -50,6 +180,10 @@ name = "Bryan Adams"
 youtube_url = "https://music.youtube.com/watch?v=IOqXiyqNAnU"
 
 # Carly Rae Jepsen
+
+[[song]]
+name = "Carly Rae Jepsen - Call Me Maybe"
+youtube_url = "https://music.youtube.com/watch?v=l5rJMWGTwVM"
 
 [[song]]
 name = "Carly Rae Jepsen - I Really Like You"
@@ -123,6 +257,16 @@ youtube_url = "https://music.youtube.com/watch?v=sQxszQ9BsxM"
 name = "All That You Are"
 youtube_url = "https://music.youtube.com/watch?v=mdbQej8HQDc"
 
+# Hazbin Hotel
+# Why Matthew? Why must you do this?
+
+[[song]]
+name = "Hazbin Hotel - Loser, Baby"
+youtube_url = "https://music.youtube.com/watch?v=SSwx8-TyneY"
+
+[[song]]
+name = "Hazbin Hotel - Gravity"
+youtube_url = "https://music.youtube.com/watch?v=8QkqehaWWa4"
 
 # Hoobastank
 
@@ -147,6 +291,28 @@ youtube_url = "https://music.youtube.com/watch?v=MUZwblurraA"
 [[song]]
 name = "Journey - Don't Stop Believin'"
 youtube_url = "https://music.youtube.com/watch?v=mM3Vmn4pdog"
+
+# Justin Bieber
+
+[[song]]                                                
+youtube_url = "https://music.youtube.com/watch?v=v16qZcBllUU"
+name = "Justin Bieber - Sorry"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=GqWYJT-iMTw"
+name = "Justin Bieber - Baby (feat. Ludacris)"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=aWkPBCF8rFU"
+name = "Justin Bieber - Beauty And A Beat (feat. Nicki Minaj)"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=7n1pMfm-n8A"
+name = "Sean Kingston, Justin Bieber - Eenie Meenie"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=XfEMj-z3TtA"
+name = "The Kid LAROI, Justin Bieber - STAY"
 
 # Keane
 
@@ -201,6 +367,18 @@ youtube_url = "https://music.youtube.com/watch?v=Q7cQU86CDB0"
 # The Living Tombstone
 
 [[song]]
+name = "The Living Tombstone & Nintendo - Jump Up, Super Star!"
+youtube_url = "https://music.youtube.com/watch?v=7PQsGX1YOuE"
+
+[[song]]
+name = "The Living Tombstone - Sunburn"
+youtube_url = "https://music.youtube.com/watch?v=OecoHvuxkxY"
+
+[[song]]
+name = "The Living Tombstone - Sunburn Demo"
+youtube_url = "https://music.youtube.com/watch?v=-hesc6ThW1Y"
+
+[[song]]
 name = "The Living Tombstone - Can't Wait"
 youtube_url = "https://music.youtube.com/watch?v=gv7QwZqMFYc"
 
@@ -209,6 +387,14 @@ name = "The Living Tombstone, Eurobeat Brony - Discord"
 youtube_url = "https://music.youtube.com/watch?v=5Z56MZFMp0k"
 
 # Maroon 5
+
+[[song]]
+name = "Maroon 5 - Girls Like You"
+youtube_url = "https://music.youtube.com/watch?v=ULFXeCsiXUQ"
+
+[[song]]
+name = "Maroon 5 - Maps"
+youtube_url = "https://music.youtube.com/watch?v=UDxjtx1A6ZU"
 
 [[song]]
 name = "Maroon 5 - She Will Be Loved - Radio Mix"
@@ -251,14 +437,30 @@ youtube_url = "https://music.youtube.com/watch?v=vkvrbbtnp6s"
 # Owl City
 
 [[song]]
+name = "Owl City - When Can I See You Again? (From \"Wreck it Ralph\")"
+youtube_url = "https://music.youtube.com/watch?v=225qTJRs9gE"
+
+[[song]]
 name = "Owl City - Fireflies"
 youtube_url = "https://music.youtube.com/watch?v=KWLGyeg74es"
+
+# Panic! At The Disco
+
+[[song]]
+name = "Panic! At The Disco - High Hopes"
+youtube_url = "https://music.youtube.com/watch?v=GJY8OMJXRAk"
 
 # Paramore
 
 [[song]]
 name = "Paramore - Still into You"
 youtube_url = "https://music.youtube.com/watch?v=tv7yHglIDsc"
+
+# Pharell Williams
+
+[[song]]
+name = "Pharrel Williams - Double life (From Despicable Me 4)"
+youtube_url = "https://music.youtube.com/watch?v=HPrNFRWpGHw"
 
 # Plain White T's
 
