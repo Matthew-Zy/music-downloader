@@ -92,8 +92,16 @@ youtube_url = "https://music.youtube.com/watch?v=f_K_0SNaRk0"
 # Goo Goo Dolls
 
 [[song]]
+name = "Run all night"
+youtube_url = "https://music.youtube.com/watch?v=3QJGE2bsYq8"
+
+[[song]]
 name = "Better Days"
 youtube_url = "https://music.youtube.com/watch?v=i-kHleNYIDc"
+[song.metadata_overrides]
+album = "Let Love In"
+track_number = 4
+comment = "Also technically a single, which is why the automatic scraper gets no album for this title"
 
 [[song]]
 name = "Black Balloon"

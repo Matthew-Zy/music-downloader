@@ -56,4 +56,6 @@ year = 2022
 comment = "This cover is fantastico"
 lyrics = "TODO!!! (do it eventually)"
 
-
+[[song]]
+name = "Red Velvet - Day 1"
+youtube_url = "https://music.youtube.com/watch?v=KTaa3Pbv9c0"
