@@ -1,7 +1,7 @@
 from pathlib import Path 
 from collections import deque 
 from musicdownloader.musicloader import read_music_file_toml
-
+from musicdownloader.songloader import SongInfo
 AUDIO_EXTENSIONS = [".opus", ".webm", ".mp3", ".wav", ".aac"]
 
 # Mom can we have DFS?
@@ -43,9 +43,13 @@ def playlist_lengths(path: Path | str):
             for i in range(len(lines)):
                 if duplicate_url in lines[i]:
                     instance += 1
-                    print(f"[{playlist_file.name}]:[{i+1}] Instance {instance} of duplicate url {duplicate_url}")
+                    print(f"[{playlist_file.name}]:[{i+1}] Instance {instance} of duplicate: [{duplicate_url}]")
             pass
-
+        def s_contains_name(s: SongInfo, seen: list[SongInfo]):
+            for saw in seen:
+                if saw.name == s.name:
+                    return True 
+            return False
         if playlist_file.suffix != ".toml":
             return
         songs = read_music_file_toml(playlist_file)
@@ -56,10 +60,13 @@ def playlist_lengths(path: Path | str):
             if s in seen:
                 warn_duplicate(line_numbers, s.youtube_url)
                 continue 
+            elif s_contains_name(s, seen):
+                warn_duplicate(line_numbers, s.name)
+    
             unique += 1
             seen.append(s)
             
-        print(f"{playlist_file.name:<12}-{len(songs):>3} Total; {unique:>3} Uniques; {(len(songs)-unique):>3} Duplicates;")
+        print(f"{playlist_file.name:<12}-{len(songs):>3} Total; {unique:>3} Uniques Urls; {(len(songs)-unique):>3} Duplicate Url(s);")
 
     path = Path(path) if isinstance(path, str) else path
     if path.is_file():

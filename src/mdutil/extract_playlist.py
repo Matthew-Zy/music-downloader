@@ -22,6 +22,7 @@ def get_yt_music_tracks_with_titles(playlist_url):
                     for artist in (track.get("artists") or [])
                     if artist.get("name")
                 ),
+                "album": (track.get("album") or {}).get("name"),
                 "url": f"https://music.youtube.com/watch?v={track['videoId']}",
             }
             for track in playlist.get("tracks", [])
@@ -41,7 +42,7 @@ def yt_music_tracks_to_toml(playlist_url: str, file_output: str | Path):
     for s in converted:
         recv_songs.append(SongInfo(
             youtube_url=s.get("url"),
-            name=f'{s.get("artist", "")} - {s.get("title", "")}'
+            name=f'{s.get("artist", "")} - {s.get("title", "")} - {s.get("album", "")}'
         ))
     if file_output is None:
         write_music_file_toml(None, recv_songs)
@@ -70,4 +71,5 @@ if __name__ == "__main__":
     for track in tracks:
         print(f"Title: {track['title']}")
         print(f"Link:  {track['url']}")
+        print(f"Album: {track['album']}")
         print(f"Artist(s): {track['artist']}\n")
