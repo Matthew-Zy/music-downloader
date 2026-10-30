@@ -280,7 +280,10 @@ def download_songs(
 
     yt_opts = {
         "format": "bestaudio",
-        "outtmpl": str(Path(configuration.output_folder) / "%(title)s.%(ext)s"),
+        "outtmpl": str(
+            Path(configuration.output_folder)
+            / "%(track,title)s%(album& - {}|)s%(artist,creator,uploader& - {}|)s.%(ext)s"
+        ),
         "noplaylist": True,
         **configuration.cookie_options(),
         "overwrites": True,
