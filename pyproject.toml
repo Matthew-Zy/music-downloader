@@ -1,7 +1,7 @@
 [project]
 name = "musicdownloader"
 version = "0.1.0"
-description = "Add your description here"
+description = "A tool to download music from youtube music from .toml source files. Also remembers previous downloads and will only redownload songs if a higher quality version is available or unless prompted to."
 readme = "README.md"
 authors = [
     { name = "Matthew-Zy", email = "166348388+Matthew-Zy@users.noreply.github.com" }
@@ -19,6 +19,7 @@ dependencies = [
 
 [project.scripts]
 musicdownloader = "musicdownloader:main"
+md = "musicdownloader:main"
 mdutil = "mdutil:main"
 
 [build-system]
