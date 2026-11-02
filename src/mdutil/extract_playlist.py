@@ -7,7 +7,10 @@ from musicdownloader.musicloader import write_music_file_toml, read_music_file_t
 from musicdownloader.songloader import SongInfo 
 
 def get_yt_music_tracks_with_titles(playlist_url):
-    """Return public playlist tracks with titles and comma-separated artists."""
+    """Return public playlist tracks with titles and comma-separated artists.
+        For the dictionary, it returns, please refer to:
+        https://ytmusicapi.readthedocs.io/en/stable/reference/playlists.html
+    """
     try:
         playlist_ids = parse_qs(urlparse(playlist_url).query).get("list")
         if not playlist_ids:
@@ -33,7 +36,10 @@ def get_yt_music_tracks_with_titles(playlist_url):
         return []
 
 
-def yt_music_tracks_to_toml(playlist_url: str, file_output: str | Path):
+def yt_music_tracks_to_toml(playlist_url: str, file_output: str | Path | None) -> list[SongInfo]:
+    """
+    If None is passed in, it will print everything to stdout, and return the entire list in the SongInfo dataclass.
+    """
     converted = get_yt_music_tracks_with_titles(playlist_url)
     if len(converted) == 0:
         print("failed to convert playlist")
@@ -61,6 +67,8 @@ def yt_music_tracks_to_toml(playlist_url: str, file_output: str | Path):
         else:
             write_music_file_toml(file_output, actual_new_songs, mode="a")
             print(f"Sucessfully written to: {file_output}")
+
+    return recv_songs
 
 
 if __name__ == "__main__":
