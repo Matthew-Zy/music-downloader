@@ -31,4 +31,8 @@ class SongInfo:
     quality: Optional[QualityInfo] = None 
 
     def __eq__(self, other: SongInfo) -> bool:
+        if not isinstance(other, SongInfo):
+            return NotImplemented
         return self.youtube_url == other.youtube_url
+    def __hash__(self):
+        return hash(self.youtube_url)

@@ -34,10 +34,7 @@ sync:				## Usage: make sync PLAYLIST_DIR=[DIR]. Syncs a given folder containing
 	cd "$(PLAYLIST_DIR)" && git pull 
 	uv run musicdownloader --location "$(PLAYLIST_DIR)" \
 		--cookies-from-browser firefox \
-		--check-metadata-changes \
 		$(ADDITIONAL_FLAGS)
-#		--check-quality-increase 
-# Ommited because uhh... honestly it's not necessary
 
 
 

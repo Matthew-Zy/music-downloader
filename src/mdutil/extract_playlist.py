@@ -5,42 +5,41 @@ from ytmusicapi import YTMusic
 from musicdownloader.musicloader import write_music_file_toml, read_music_file_toml
 
 from musicdownloader.songloader import SongInfo 
+from musicdownloader.download_songs import download_songs
+from musicdownloader.config import DownloadConfig
 
-def get_yt_music_tracks_with_titles(playlist_url):
+def get_yt_music_tracks_information(playlist_url: str):
     """Return public playlist tracks with titles and comma-separated artists.
         For the dictionary, it returns, please refer to:
         https://ytmusicapi.readthedocs.io/en/stable/reference/playlists.html
     """
-    try:
-        playlist_ids = parse_qs(urlparse(playlist_url).query).get("list")
-        if not playlist_ids:
-            raise ValueError("Playlist URL must include a nonempty list parameter")
+    playlist_ids = parse_qs(urlparse(playlist_url).query).get("list")
+    if not playlist_ids:
+        raise ValueError("Playlist URL must include a nonempty list parameter")
 
-        playlist = YTMusic().get_playlist(playlist_ids[0], limit=None)
-        return [
-            {
-                "title": track.get("title"),
-                "artist": ", ".join(
-                    artist["name"]
-                    for artist in (track.get("artists") or [])
-                    if artist.get("name")
-                ),
-                "album": (track.get("album") or {}).get("name"),
-                "url": f"https://music.youtube.com/watch?v={track['videoId']}",
-            }
-            for track in playlist.get("tracks", [])
-            if track and track.get("videoId")
-        ]
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return []
+    playlist = YTMusic().get_playlist(playlist_ids[0], limit=None)
+    return [
+        {
+            "title": track.get("title"),
+            "artist": ", ".join(
+                artist["name"]
+                for artist in (track.get("artists") or [])
+                if artist.get("name")
+            ),
+            "album": (track.get("album") or {}).get("name"),
+            "url": f"https://music.youtube.com/watch?v={track['videoId']}",
+        }
+        for track in playlist.get("tracks", [])
+        if track and track.get("videoId")
+    ]
+
 
 
 def yt_music_tracks_to_toml(playlist_url: str, file_output: str | Path | None) -> list[SongInfo]:
     """
     If None is passed in, it will print everything to stdout, and return the entire list in the SongInfo dataclass.
     """
-    converted = get_yt_music_tracks_with_titles(playlist_url)
+    converted = get_yt_music_tracks_information(playlist_url)
     if len(converted) == 0:
         print("failed to convert playlist")
         return 
@@ -70,10 +69,35 @@ def yt_music_tracks_to_toml(playlist_url: str, file_output: str | Path | None) -
 
     return recv_songs
 
+def download_songs_from_yt_playlist(playlist_url: str, output_location: str | Path, cookies: str) -> list[SongInfo]:
+    """Cookies for this function will only support cookies from browser."""
+    if output_location is None:
+        return print("Please provide a valid output location")
+    if isinstance(output_location, str):
+        output_location = Path(output_location)
+    extracted_songs: list[SongInfo] = yt_music_tracks_to_toml(playlist_url, None)
+    Dconfig = DownloadConfig(
+        download_all=True,
+        output_folder=output_location, 
+        browser_cookies=cookies,
+    )
+    
+    successfully_downloaded_songs = download_songs(extracted_songs, None, Dconfig)
+
+    # uses set differences here
+    unsuccessful_downloads = list(set(extracted_songs) - set(successfully_downloaded_songs))
+
+    if len(unsuccessful_downloads) > 0:
+        print("Some songs were NOT downloaded:")
+        for us in unsuccessful_downloads:
+            print(f'name : "{us.name}; url : "{us.youtube_url}";')
+    else:
+        print(f"Successfully downloaded all songs in playlist: {playlist_url}")
+    
 
 if __name__ == "__main__":
     yt_music_playlist = "https://music.youtube.com/playlist?list=PLaOgDfABCiaY"
-    tracks = get_yt_music_tracks_with_titles(yt_music_playlist)
+    tracks = get_yt_music_tracks_information(yt_music_playlist)
 
     print(f"Extracted {len(tracks)} tracks:\n")
     for track in tracks:
