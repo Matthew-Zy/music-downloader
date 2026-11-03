@@ -184,6 +184,10 @@ youtube_url = "https://music.youtube.com/watch?v=8Xv_Hg8o1fw"
 # Cyberpunk
 
 [[song]]
+name = "Cyberpunk 2 - In Love With Myself"
+youtube_url = "https://music.youtube.com/watch?v=eWmyfIZEdXM"
+
+[[song]]
 name = "Rosa Waltons - I really want to stay at your house"
 youtube_url = "https://music.youtube.com/watch?v=Rbgw_rduQpM"
 
@@ -483,3 +487,13 @@ youtube_url = "https://music.youtube.com/watch?v=uAYUfGWD9SM"
 [[song]]
 name = "Sixpence None The Richer - Kiss Me"
 youtube_url = "https://music.youtube.com/watch?v=K2tbQ_g2VbQ"
+
+# Your Favorite Martian
+
+[[song]]
+name = "YFM - Real Girl"
+youtube_url = "https://music.youtube.com/watch?v=b4PMYA4Qxfk"
+
+[[song]]
+name = "YFM - Take Over the World"
+youtube_url = "https://music.youtube.com/watch?v=d8pmCSItNDs"
