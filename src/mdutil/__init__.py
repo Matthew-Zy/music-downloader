@@ -2,10 +2,18 @@ import argparse
 import os
 import sys
 from pathlib import Path
+from typing import Protocol 
 
 from . import extract_playlist
 from . import audio_funcs 
 
+class CLIArgs(Protocol):
+    extract: str | None 
+    download: str | None 
+    output: str | None 
+    remove_music: str | None 
+    playlist_sizes: str | None 
+    cookies_from_browser: str | None
 
 def print_to_terminal(message):
     # Use 'CON' for Windows and '/dev/tty' for Unix/Linux/macOS
@@ -20,23 +28,23 @@ def print_to_terminal(message):
         sys.stderr.write(message + '\n')
 
 
-def parse_args() -> dict[str, any]:
+def parse_args() -> CLIArgs:
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
         description="",
-        epilog="Riyal or Fakeh"           
+        epilog="Riyal or Fakeh",
     )
 
-    parser.add_argument("-ep", "--extract-playlist", type=str, default=None, 
-        help="Turn a PUBLIC yt playlist into a valid TOML configuration. Outputs it to the given output if provided, otherwise just prints it to console. Appends it to the existing toml file if it already exists. For duplicates, it will use the existing toml file's entry instead.")
-    parser.add_argument("-dp", "--download-playlist", type=str, default=None, 
-        help="downloads the playlist to a target folder from --output. -o argument must be given for this command")
+    parser.add_argument("-e", "--extract", type=str, default=None, 
+        help="Turn a PUBLIC yt playlist or music url into a valid TOML configuration. Outputs it to the given output if provided, otherwise just prints it to console. Appends it to the existing toml file if it already exists. For duplicates, it will use the existing toml file's entry instead.")
+    parser.add_argument("-d", "--download", type=str, default=None, 
+        help="downloads the playlist or music url to a target folder from --output. The -o argument must be given for this command")
     parser.add_argument("-o", "--output", type=Path, default=None, 
         help="output location for any operations")
     parser.add_argument("-rm", "--remove-music", type=Path, default=None, 
         help=f"Delete all music files from a folder. (Files that will be deleted: {audio_funcs.AUDIO_EXTENSIONS})")
     parser.add_argument("-ls", "--playlist-sizes", type=Path, default=None, 
-        help="List the playlist sizes of a playlist or all playlists in a folder.")
+        help="List the .toml playlist sizes of a playlist or all playlists in a folder.")
     parser.add_argument(
         "-c", "--cookies-from-browser",
         metavar="BROWSER[:PROFILE]",
@@ -49,14 +57,14 @@ def parse_args() -> dict[str, any]:
 def main():
     actions = 0
     args = parse_args()
-    print(args)
-    if args.extract_playlist:
-        if "youtube" in args.extract_playlist.lower():
-            extract_playlist.yt_music_tracks_to_toml(args.extract_playlist, args.output)
-        elif "spotify" in args.extract_playlist.lower():
+#    print(args)
+    if args.extract:
+        if "youtube" in args.extract.lower():
+            extract_playlist.yt_music_tracks_to_toml(args.extract, args.output)
+        elif "spotify" in args.extract.lower():
             print("Implementation for spotify does not exist yet.... (TBD)")
         else:
-            print(f'"{args.extract_playlist}" is not a valid/supported playlist.')
+            print(f'"{args.extract}" is not a valid/supported playlist.')
         actions += 1
 
     if args.remove_music:
@@ -65,9 +73,9 @@ def main():
     if args.playlist_sizes:
         audio_funcs.playlist_lengths(args.playlist_sizes)
         actions += 1
-    if args.download_playlist:
+    if args.download:
         if args.output is not None:
-            extract_playlist.download_songs_from_yt_playlist(args.download_playlist, args.output, args.cookies_from_browser)
+            extract_playlist.download_songs_from_yt_playlist(args.download, args.output, args.cookies_from_browser)
         else:
             print("Please provide an output folder with -o when downloading from a playlist")
         actions += 1
