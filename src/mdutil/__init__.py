@@ -6,6 +6,7 @@ from typing import Protocol
 
 from . import extract_playlist
 from . import audio_funcs 
+from . import repl
 
 class CLIArgs(Protocol):
     extract: str | None 
@@ -13,6 +14,8 @@ class CLIArgs(Protocol):
     output: str | None 
     remove_music: str | None 
     playlist_sizes: str | None 
+    remove_list_query: str | None
+    repl: str | None
     cookies_from_browser: str | None
 
 def print_to_terminal(message):
@@ -31,7 +34,7 @@ def print_to_terminal(message):
 def parse_args() -> CLIArgs:
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-        description="",
+        description="utilities to help deal with the many flaws of my downloader program",
         epilog="Riyal or Fakeh",
     )
 
@@ -45,6 +48,10 @@ def parse_args() -> CLIArgs:
         help=f"Delete all music files from a folder. (Files that will be deleted: {audio_funcs.AUDIO_EXTENSIONS})")
     parser.add_argument("-ls", "--playlist-sizes", type=Path, default=None, 
         help="List the .toml playlist sizes of a playlist or all playlists in a folder.")
+    parser.add_argument("-rl", "--remove-list-query", type=Path, default=None,
+        help="Remove the list query from given params from a TOML file or all TOML files in a folder")
+    parser.add_argument("--repl", action='store_true', default=False,
+        help="Crappy repl that can do stuff... Will put links you provided to a valid -o")
     parser.add_argument(
         "-c", "--cookies-from-browser",
         metavar="BROWSER[:PROFILE]",
@@ -57,7 +64,12 @@ def parse_args() -> CLIArgs:
 def main():
     actions = 0
     args = parse_args()
-#    print(args)
+    print(args)
+
+    if args.repl:
+        repl.run_repl(args.output)
+        return
+
     if args.extract:
         if "youtube" in args.extract.lower():
             extract_playlist.yt_music_tracks_to_toml(args.extract, args.output)
@@ -72,6 +84,9 @@ def main():
         actions += 1
     if args.playlist_sizes:
         audio_funcs.playlist_lengths(args.playlist_sizes)
+        actions += 1
+    if args.remove_list_query:
+        audio_funcs.clean_yt_urls(args.remove_list_query)
         actions += 1
     if args.download:
         if args.output is not None:

@@ -11,26 +11,27 @@ from musicdownloader.config import DownloadConfig
 
 def get_yt_music_tracks_information(url: str) -> list[dict[str, any]]:
     """
-        Works with single urls AND playlist urls
+        Works with single urls AND playlist urls. 
+        For a song that has a recommend list query, it will just extract the music file
         Return public playlist tracks with titles and comma-separated artists.
         For the dictionary, it returns, please refer to:
         https://ytmusicapi.readthedocs.io/en/stable/reference/playlists.html
     """
     playlist_ids = parse_qs(urlparse(url).query).get("list")
-    if playlist_ids:
+    song_id = parse_qs(urlparse(url).query).get("v")
+    if song_id:
+        song = YTMusic().get_watch_playlist(song_id[0], limit=1)
+        if song.get("tracks") is None:
+            raise ValueError("Could not get track from music url")
+        tracks = song.get("tracks")
+        tracks = [tracks[0]]
+    else:
 
         playlist = YTMusic().get_playlist(playlist_ids[0], limit=None)
 
         if playlist.get("tracks") is None:
             raise ValueError("Could not get any tracks from playlist")
         tracks = playlist.get("tracks")
-    else:
-        song_id = parse_qs(urlparse(url).query).get("v")
-        song = YTMusic().get_watch_playlist(song_id[0], limit=1)
-        if song.get("tracks") is None:
-            raise ValueError("Could not get track from music url")
-        tracks = song.get("tracks")
-        tracks = [tracks[0]]
 
     good_tracks = filter(lambda t: t and t.get("videoId"), tracks)
 

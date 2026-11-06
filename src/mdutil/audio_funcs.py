@@ -1,8 +1,12 @@
+import os
 from pathlib import Path 
 from collections import deque 
+from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 from musicdownloader.musicloader import read_music_file_toml
 from musicdownloader.songloader import SongInfo
 AUDIO_EXTENSIONS = [".opus", ".webm", ".mp3", ".wav", ".aac"]
+
+YOUTUBE_URL_KEY = "youtube_url"
 
 # Mom can we have DFS?
 # We have DFS at home
@@ -75,6 +79,52 @@ def playlist_lengths(path: Path | str):
         dfs_files(path, playlist_len)
     else: 
         print(f'Path: "{path}" does not exist or could not be found')
+
+
+def remove_list_query(url: str) -> str:
+    parsed = urlparse(url)
+
+    # Parse query parameters into a list of tuples, filtering out 'list'
+    query_params = [
+        (k, v) for k, v in parse_qsl(parsed.query, keep_blank_values=True) if k != "list"
+    ]
+
+    # Rebuild the query string and update the parsed URL
+    new_query = urlencode(query_params)
+    parsed = parsed._replace(query=new_query)
+
+    return urlunparse(parsed)
+
+def clean_yt_urls(path: Path | str):
+    def clean_yt_urls_file(file: Path):
+        if file.suffix != ".toml":
+            return
+        temp_file: Path = file.parent / f"{file.stem}.{file.suffix}.temp"
+        try:
+            with open(file, "r", encoding="utf-8") as infile, \
+            open(temp_file, "w", encoding="utf-8") as outfile:
+                for line in infile:
+                    if line.strip().startswith(YOUTUBE_URL_KEY):
+                        key, value = line.split("=", 1)
+                        key, value = key.strip(), value.strip().strip("\"")
+                        value = remove_list_query(value)
+                        ending = "\n" if line.endswith("\n") else ""
+                        outfile.write(f'{key} = "{value}"{ending}')
+                    else:
+                        outfile.write(line)
+            os.replace(temp_file, file)
+            return
+        except FileNotFoundError:
+            print(f"{file} could not be found.")
+        except PermissionError:
+            print("Error: You do not have permission to access this file.")
+        except OSError as e:
+            print(f"A system or I/O error occurred: {e}")
+        temp_file.unlink(missing_ok=True)
+
+    dfs_files(path, clean_yt_urls_file)
+
+    
 
 if __name__ == "__main__":
     rm_audio("test")
