@@ -9,6 +9,7 @@ authors = [
 requires-python = ">=3.14"
 dependencies = [
     "dacite>=1.9.2",
+    "just-playback>=1.0.0",
     "mutagen>=1.48.1",
     "pillow>=13.0.0",
     "tomli-w>=1.2.0",
@@ -21,6 +22,7 @@ dependencies = [
 musicdownloader = "musicdownloader:main"
 md = "musicdownloader:main"
 mdutil = "mdutil:main"
+mdapp = "mdapp:main"
 
 [build-system]
 requires = ["uv_build>=0.13.5,<0.14.0"]

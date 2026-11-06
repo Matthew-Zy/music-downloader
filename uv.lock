@@ -250,6 +250,26 @@ wheels = [
 ]
 
 [[package]]
+name = "just-playback"
+version = "1.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "cffi" },
+    { name = "tinytag" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/3e/43/4bc2d0a29b8ebd319bfc08d3899ae158239aff6d8b8443adce8462252aec/just_playback-1.0.0.tar.gz", hash = "sha256:629f15bd545b0de0859cd5f611d8de564f443db87feacaef46b923de7a9d5b5a", size = 716466, upload-time = "2026-09-19T14:54:31.951Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/20/89/e975edbc9a1470a6723e5356a677842cb81b86b1722fd34f687f8e4ed8bd/just_playback-1.0.0-cp314-cp314-macosx_10_15_x86_64.whl", hash = "sha256:58ceba924ab9ffe02c09db10eb2c3cb53046caf37d25297a861874ca458b11d6", size = 1263399, upload-time = "2026-09-19T14:54:00.479Z" },
+    { url = "https://files.pythonhosted.org/packages/7e/75/aa80023bd38da6481c82154df9566f8583699dc67cccd59c32fecb812fe6/just_playback-1.0.0-cp314-cp314-macosx_11_0_arm64.whl", hash = "sha256:3e7e281146d4368d59c2bb93edda9e2b955359525860271e080a3070bb56afff", size = 1211727, upload-time = "2026-09-19T14:54:02.245Z" },
+    { url = "https://files.pythonhosted.org/packages/bf/f9/ac5435edf54b9672183b79a80cb0fca186c9ff1db525d251e2956df2c54e/just_playback-1.0.0-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:1f374ca1553822c357d9f1cdc36e2aa0cd095d7ba8f7b6efae28233d4538602f", size = 1546423, upload-time = "2026-09-19T14:54:04.487Z" },
+    { url = "https://files.pythonhosted.org/packages/f5/d7/d3da8e0660e33137b9e508d766b034aa99294dd7eaba6ac4c1a6c3bb7044/just_playback-1.0.0-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:b6583587481357e15a9258d5abb6ccb779d7471998522dbe4c9b96fd5c1568de", size = 1567965, upload-time = "2026-09-19T14:54:06.775Z" },
+    { url = "https://files.pythonhosted.org/packages/84/ed/1061e2fe74ed64d55baea9496e32ffe86dfbbc072877110e568319e61546/just_playback-1.0.0-cp314-cp314-musllinux_1_2_aarch64.whl", hash = "sha256:f2086334d28c422751b8c4f690183458e9569d0778b813fad279bd3276b40997", size = 1564869, upload-time = "2026-09-19T14:54:08.976Z" },
+    { url = "https://files.pythonhosted.org/packages/f3/6a/d07160c1353c989c1659597723386c4925562ce704234e099bc827ad1652/just_playback-1.0.0-cp314-cp314-musllinux_1_2_x86_64.whl", hash = "sha256:2a3d6192bebc7380656bb621245b86a718a8bb6f8305d096c0274ebed7e0ecf6", size = 1571298, upload-time = "2026-09-19T14:54:11.535Z" },
+    { url = "https://files.pythonhosted.org/packages/96/d5/d158a8f8da373f556c8b61d7acca6cfd6a846e07f5f30139730cc8f8c258/just_playback-1.0.0-cp314-cp314-win_amd64.whl", hash = "sha256:46b350f818d076c113e3040f71fbbd8a68933833ca010bc386e611e089d1d24c", size = 1059812, upload-time = "2026-09-19T14:54:13.158Z" },
+    { url = "https://files.pythonhosted.org/packages/bc/7a/ec5980f21f7ce90a790ccf8df1b624b2774e44e6e3f78c40cdc56bc17f39/just_playback-1.0.0-cp314-cp314-win_arm64.whl", hash = "sha256:3a3343a2210361e57f52bfcd1091c9880a1dc5c3e6f929910087bb24a74e347b", size = 1028192, upload-time = "2026-09-19T14:54:14.878Z" },
+]
+
+[[package]]
 name = "mss"
 version = "10.2.0"
 source = { registry = "https://pypi.org/simple" }
@@ -264,6 +284,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "dacite" },
+    { name = "just-playback" },
     { name = "mutagen" },
     { name = "pillow" },
     { name = "tomli-w" },
@@ -275,6 +296,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "dacite", specifier = ">=1.9.2" },
+    { name = "just-playback", specifier = ">=1.0.0" },
     { name = "mutagen", specifier = ">=1.48.1" },
     { name = "pillow", specifier = ">=13.0.0" },
     { name = "tomli-w", specifier = ">=1.2.0" },
@@ -404,6 +426,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ac/c3/e2a2b89f2d3e2179abd6d00ebd70bff6273f37fb3e0cc209f48b39d00cbf/requests-2.34.2.tar.gz", hash = "sha256:f288924cae4e29463698d6d60bc6a4da69c89185ad1e0bcc4104f584e960b9ed", size = 142856, upload-time = "2026-05-14T19:25:27.735Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl", hash = "sha256:2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0", size = 73075, upload-time = "2026-05-14T19:25:26.443Z" },
+]
+
+[[package]]
+name = "tinytag"
+version = "2.3.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/38/0f/fae085b7f19fe0c67b68e6d70098ac6cd046cc498f253f5ee56a3dd03bbc/tinytag-2.3.2.tar.gz", hash = "sha256:021d711cdbdbf840d3b67b976cb34dadc58d2fcfd490eb74ef9602b37b991414", size = 47353, upload-time = "2026-09-07T17:46:08.886Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6b/54/d378858d14e5c5c7b921cb9ffccf27be3d34f3d6d010c57404ddd634685d/tinytag-2.3.2-py3-none-any.whl", hash = "sha256:ebaf957915266b9c20414a10f8c5170a345aa039a794650d39d66e7d6b96199f", size = 37171, upload-time = "2026-09-07T17:46:07.434Z" },
 ]
 
 [[package]]
