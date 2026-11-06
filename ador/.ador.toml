@@ -41,8 +41,118 @@ album = "Ephemera"
 track_number = 9
 year = 2022
 comment = "This cover is goated..."
-lyrics = """Something in this feeling,
-Something is Revealing,
+lyrics = """Within this Feeling,
+Something is revealing,
+nothing is concealing
+love that has been 
+bound from the start.
+Blinking and shining,
+fate desperately pining, 
+two hands realigning
+into the true
+shape of a heart.
+
+Within this feeling, something is revealing, 
+nothing is concealing love that has been bound from the start.
+Blinking and shining, fate desperately pining, 
+two hands realigning into the true shape of a heart.
+
+Everything that I hid right from the start.
+~~ That one true feeling ~~
+You could see what was buried in my pride
+Every time I look into my heart
+~~ Within that moment ~~
+I can feel the warmth that you left inside
+The song in my heart
+Is it time to sing?
+I could not believe
+in just anything
+If it's just you and me I still cannot agree if we are meant to be.
+You never want to wait and see, so that's how I know
+we can have our very own eternity.
+
+It must have been from the day where I longed to say you and I share a destiny.
+Day by day I come to see,
+you share a future with me
+No need to play pretend, when I've always known
+that these feelings will never end
+This love
+continues to sing, 
+you're my everything.
+
+Within this Feeling,
+Something is revealing,
+nothing is concealing
+love that has been 
+bound from the start.
+Blinking and shining,
+fate desperately pining, 
+two hands realigning
+into the true
+shape of a heart.
+
+Within this feeling, something is revealing, 
+nothing is concealing love that has been bound from the start.
+Blinking and shining, fate desperately pining, 
+two hands realigning into the true shape of a heart.
+
+Whenever doubt starts clouding my mind
+~~ you were right beside me ~~
+I can feel you chase the dark away
+I can see because you're still here with me
+~~ you're never leaving ~~
+With you here, I can face another day.
+
+Just a tiny spark
+You're lighting my way 
+Guides me through the dark
+And you're here to stay 
+But perfection and bliss are meaningless if I can't feel your hand in mine
+A truly perfect world could only be real to me
+A burning connection forged in memory
+
+Always from the moment on,
+I've been waiting for you to become my destiny
+Face the future hand in hand,
+miracles we understand
+If I'm all on my own, left to be alone, how can I ever find my way
+Can you swear
+that you'll never leave?
+Promise me!
+
+I still remember,
+standing here together,
+laughing for forever,
+cherishing you
+being with me .
+
+I still remember,
+hurtful words igniting,
+painful days of fighting,
+nights that left me 
+full of tears.
+I still remember, driving home at midnight, 
+seeing you in moonlight, you're the only star that's in sight.
+I still remember, our very first meeting, the greeting that brought me to you.
+
+It must have been from the day where I longed to say
+
+It must have been from that day, where I longed to say "you and I share a destiny"
+Day by day I come to see, you share a future with me
+No need to play pretend, when I've always known, that these feelings will never end
+This love will always sing, whatever life may bring
+Hey, didn't you once say there would be a day we could make our own memories?
+Won't you come with me? Let's see what our new life could be.
+
+Within this feeling,
+something is revealing,
+nothing is concealing
+love that has been bound from the start
+
+Blinking and shining, 
+fate desperately pining,
+two hands realigning,
+into the true shape of a heart.
 """
 
 [[song]]
@@ -53,8 +163,78 @@ title = "[Gotoubun no Hanayome OP 1] Gotoubun no Kimochi (English Cover)"
 artist = ["Z3N", "Lunarveil", "Spiral", "Shiena", "Saki", "Ryuuki", "Michiko"]
 bpm = 175
 year = 2022
-comment = "This cover is fantastico"
-lyrics = "TODO!!! (do it eventually)"
+comment = """
+[Title & Credits]
+Gotoubun no Kimochi (ENGLISH COVER)
+Original by Nakano-ke no Itsutsugo
+Cover by:
+English Lyric: Mame
+Time / Tune: Z3N
+Video: Michiko
+Mix: ryuuki
+Vocals: Lunarveil, Shiena, Spiral, z3n, saki
+"""
+lyrics = """
+[Intro]
+Uesugi, wake up already!!
+Hey, Fuutarou!
+Fuutarou~
+Yo, Uesugi!
+Wake up, Uesugi!
+
+[Intro Lyrics]
+Playing on repeat
+Playing on repeat
+A distinct heartbeat
+A distinct heartbeat
+I need you to see
+Only you can complete me
+
+[Verse 1 & Chorus]
+At first I forced a smile to hide the way I feel inside
+Only took two second to hate you
+Even though I tell myself third time's a charm,
+Four is more, but I see you walk out the door
+Fifth in line, a connection by design
+I don't just want a passing glance, Won't you give me another chance
+Hate melts into love, Destined from above
+So many opening doors
+As my hand is reaching for yours
+I need you to see What you mean to me
+Five possibilities
+We really, really like you
+
+[Verse 2]
+I can't combine my feelings into a single word
+The fact I could like you is absurd
+I hope someday you could be just a friend, until the end
+Memories that I'll treasure with all my heart
+A new future where we never will be apart
+Without you I'm a hollow shell, But you've put me under your spell
+Always by my side, Your heart is your guide
+My pulse just skipped a beat, It's like you've swept me off of my feet
+What can we create, Within our own fate
+Could you be feeling this?
+I just want to see If you could ever love me
+
+[Outro]
+All of my feelings will change in their own way
+I can feel the bitterness and anger burning away
+No matter what I'll still believe
+Why don't you listen to your heart, come on, don't be naive
+Can I be by your side even when I can't swallow my pride
+Let me show you how I feel inside
+We will never go And leave you alone
+You won't regret meeting me
+We're what fate has caught
+Hate melts into love, Destined from above
+So we never will be apart
+I need you to see What you mean to me
+Five possibilities
+Will always, always give All of our love to you
+We are the brides!
+Peace!
+"""
 
 [[song]]
 name = "Red Velvet - Day 1"
@@ -67,3 +247,7 @@ youtube_url = "https://music.youtube.com/watch?v=8u6hcGpsJTE"
 [[song]]
 name = "Alya - World is Mine"
 youtube_url = "https://music.youtube.com/watch?v=CK33ESHOOvk"
+
+[[name]] 
+name = "Alya - Cherry"
+youtube_url = "https://music.youtube.com/watch?v=us9oatTmBVI"
