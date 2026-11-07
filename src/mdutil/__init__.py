@@ -64,10 +64,11 @@ def parse_args() -> CLIArgs:
 def main():
     actions = 0
     args = parse_args()
-    print(args)
+#    print(args)
 
     if args.repl:
-        repl.run_repl(args.output)
+        readevalloop = repl.MDutilRepl(args.output)
+        readevalloop.run_repl()
         return
 
     if args.extract:

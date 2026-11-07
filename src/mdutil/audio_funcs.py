@@ -70,7 +70,7 @@ def playlist_lengths(path: Path | str):
             unique += 1
             seen.append(s)
             
-        print(f"{playlist_file.name:<12}-{len(songs):>3} Total; {unique:>3} Uniques Urls; {(len(songs)-unique):>3} Duplicate Url(s);")
+        print(f"{playlist_file.name:<12}- {len(songs):>3} Total; {unique:>3} Uniques Urls; {(len(songs)-unique):>2} Duplicate Url(s);")
 
     path = Path(path) if isinstance(path, str) else path
     if path.is_file():
