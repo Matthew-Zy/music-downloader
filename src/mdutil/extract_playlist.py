@@ -59,9 +59,10 @@ def yt_music_tracks_to_toml(url: str, file_output: str | Path | None) -> list[So
 
     recv_songs: list[SongInfo] = []
     for s in converted:
+        parts = [s.get("artist"), s.get("title"), s.get("album")]
         recv_songs.append(SongInfo(
             youtube_url=s.get("url"),
-            name=f'{s.get("artist", "")} - {s.get("title", "")} - {s.get("album", "")}'
+            name = " - ".join(part for part in parts if part)
         ))
     if file_output is None:
         write_music_file_toml(None, recv_songs)

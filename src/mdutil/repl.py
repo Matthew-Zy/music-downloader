@@ -25,23 +25,25 @@ def run_repl(output: Path | None):
     except KeyboardInterrupt:
         print("\nGoodbye")
 
+@dataclass
+class ReplCmd:
+    cmd: callable[MDutilRepl, list[str]] | callable[list[str]]
+    help: str 
 
 class MDutilRepl:
-    @dataclass
-    class ReplCmd:
-        cmd: callable[MDutilRepl, list[str]]
-        help: str 
     output: Path 
     commands: dict[str, ReplCmd]
 
     def __init__(self, output: Path | None):
         self.output = output
         self.commands = {
-            "help" : self.ReplCmd(self.cmd_print_help, "Prints help for the repl and available commands"),
-            "output" : self.ReplCmd(self.cmd_set_output, "Usage: output [output file]. Sets the output of any commands we use. Do not specify an output file for None")
+            "help" : ReplCmd(self.cmd_print_help, "Prints help for the repl and available commands"),
+            "output" : ReplCmd(self.cmd_set_output, "Usage: output [output file]. Sets the output of any commands we use. Do not specify an output file for None"),
+            "clear": ReplCmd(lambda y: print("\x1b[2J\x1b[3J\x1b[H"), "clears the terminal")
         }
 
     def cmd_print_help(self, argv: list[str]):
+        print("Available commands:")
         for i, v in self.commands.items():
             print(f"{i}; {v.help}")
         pass
