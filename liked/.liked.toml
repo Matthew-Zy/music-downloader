@@ -168,6 +168,8 @@ youtube_url = "https://music.youtube.com/watch?v=l5rJMWGTwVM"
 [[song]]
 name = "Carly Rae Jepsen - I Really Like You"
 youtube_url = "https://music.youtube.com/watch?v=qV5lzRHrGeg"
+[song.metadata_overrides]
+album = "I Really Like You"
 
 # The Chalkeaters
 
@@ -186,6 +188,14 @@ youtube_url = "https://music.youtube.com/watch?v=8Xv_Hg8o1fw"
 [[song]]
 name = "Cyberpunk 2 - In Love With Myself"
 youtube_url = "https://music.youtube.com/watch?v=eWmyfIZEdXM"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=2LDfCbKXJLE"
+name = "Petite Meller - Watson (feat. Oslo Green) - Cyberpunk: Edgerunners 2 (Original Series Soundtrack)"
+
+[[song]]
+name = "Samuel Kim, Lorien - I Really Want to Stay at Your House - I Really Want to Stay at Your House"
+youtube_url = "https://music.youtube.com/watch?v=9B0yX0UIN9M"
 
 [[song]]
 name = "Rosa Waltons - I really want to stay at your house"
@@ -212,6 +222,8 @@ youtube_url = "https://music.youtube.com/watch?v=f_K_0SNaRk0"
 [[song]]
 name = "Run all night"
 youtube_url = "https://music.youtube.com/watch?v=3QJGE2bsYq8"
+[song.metadata_overrides]
+album = "Run all night"
 
 [[song]]
 name = "Better Days"
@@ -242,7 +254,7 @@ name = "All That You Are"
 youtube_url = "https://music.youtube.com/watch?v=mdbQej8HQDc"
 
 # Hazbin Hotel
-# Why Matthew? Why must you do this?
+# Why Me? Why must you do this?
 
 [[song]]
 name = "Hazbin Hotel - Loser, Baby"
@@ -381,8 +393,8 @@ youtube_url = "https://music.youtube.com/watch?v=5Z56MZFMp0k"
 # Maroon 5
 
 [[song]]
-name = "Maroon 5 - Girls Like You"
-youtube_url = "https://music.youtube.com/watch?v=ULFXeCsiXUQ"
+name = "Maroon 5 - Girls Like You (Cardi B Version) (feat. Cardi B) - Beach Cocktail Party"
+youtube_url = "https://music.youtube.com/watch?v=FTc-eIS2zQI"
 
 [[song]]
 name = "Maroon 5 - Maps"
@@ -579,3 +591,37 @@ name = "Bruno Mars - That's What I Like - 24K Magic"
 [[song]]
 youtube_url = "https://music.youtube.com/watch?v=cy6Arnjp-hQ"
 name = "Bruno Mars - Treasure - Unorthodox Jukebox"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=230sI_WxO7Y"
+name = "Shakira - Try Everything - Zootopia (Original Motion Picture Soundtrack)"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=QBtVFL0Qefs"
+name = "Britney Spears - Oops!...I Did It Again - Oops!... I Did It Again"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=N_-ekxYq93c"
+name = "Katy Perry - Part Of Me - Teenage Dream: The Complete Confection"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=FfTORCMx0Cw"
+name = "Katy Perry - California Gurls (feat. Snoop Dogg) - Teenage Dream: The Complete Confection"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=_p63lvKH2KM"
+name = "Katy Perry - Teenage Dream - Teenage Dream: The Complete Confection"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=rsGpqXiY3AI"
+name = "Strong R. - Lost Frequencies - Reality (Strong R. Remix)"
+[song.metadata_overrides]
+album = "Tower Battles"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=Ztdc7TcPdAA"
+name = "Shawn Mendes - There's Nothing Holdin' Me Back - Illuminate (Deluxe)"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=qSay_8xzijg"
+name = "Shawn Mendes - Treat You Better - Illuminate (Deluxe)"
