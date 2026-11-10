@@ -1,6 +1,24 @@
 #
+# Example entry
+# Note that the only required field is 'youtube_url'
 #
+# [[song]]
+# name = "Sign - TQQ ending - English Cover"
+# youtube_url = "https://music.youtube.com/watch?v=g89-7dQMMjY"
+# [song.metadata_overrides]
+# title = "[Gotoubun no Hanayome ED 1] Sign (English Cover)"
+# artist = ["Chiisana", "Lunarveil", "Spiral", "Shiena", "Saki"] # Can also be a string for a single artist
+# bpm = 102 
+# album = "Ephemera"
+# track_number = 9
+# year = 2022
+# comment = "This cover is goated..."
+# lyrics = """
+# Insert your
+# very long lyrics here
+# """
 #
+
 
 [[song]]
 name = "Sukiyo Two Hearts"
@@ -32,7 +50,7 @@ youtube_url = "https://music.youtube.com/watch?v=eWmyPgluj2U"
 
 [[song]]
 name = "Sign - TQQ ending - English Cover"
-youtube_url = "https://www.youtube.com/watch?v=g89-7dQMMjY"
+youtube_url = "https://music.youtube.com/watch?v=g89-7dQMMjY"
 [song.metadata_overrides]
 title = "[Gotoubun no Hanayome ED 1] Sign (English Cover)"
 artist = ["Chiisana", "Lunarveil", "Spiral", "Shiena", "Saki"]
@@ -157,7 +175,7 @@ into the true shape of a heart.
 
 [[song]]
 name = "Gotoubon no Kimochi - English Cover"
-youtube_url = "https://www.youtube.com/watch?v=vpb8sb198Ik"
+youtube_url = "https://music.youtube.com/watch?v=vpb8sb198Ik"
 [song.metadata_overrides]
 title = "[Gotoubun no Hanayome OP 1] Gotoubun no Kimochi (English Cover)"
 artist = ["Z3N", "Lunarveil", "Spiral", "Shiena", "Saki", "Ryuuki", "Michiko"]
