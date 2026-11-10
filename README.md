@@ -31,12 +31,12 @@ Example usages:
 ```bash
 # Turn in a youtube music playlist url (must be a public playlist) to a toml file that can be used my musicdownloader. 
 # if the given output file exists, it will append songs that are not in the existing file, and preserve any existing toml comments. 
-uv run mdutil -ep [PLAYLIST_LINK] -o my_playlist.toml
+uv run mdutil -e [PLAYLIST_LINK] -o my_playlist.toml
 # check the length of all playlist toml files in a folder, and check if there are any duplicate entries
 uv run mdutil -ls [FOLDER_NAME]
 # you may do multiple operations at once such as:
 #  Check length and if there are any duplicates of a toml playlist, purge all audio files in a folder, and extract a playlist into a toml playlist
-uv run mdutil -ls [FILE_NAME] -rm [FOLDER_NAME] -ep [PLAYLIST_LINK] -o my_playlist.toml
+uv run mdutil -ls [FILE_NAME] -rm [FOLDER_NAME] -e [PLAYLIST_LINK] -o music/liked/.liked.toml
 ```
 
 # Toml entries format
@@ -50,11 +50,12 @@ name = "Iris"
 youtube_url = "https://music.youtube.com/watch?v=Dy_eP-mqWow"
 
 # metadata_overrides are great if a song cover isn't officially on youtube music, where the automatic metadata fetching may not be able to find some information
+# All youtube links should have a valid youtube music counter part with a bitrate, but non official covers generally lack the proper metadata in youtube's servers
 # For example, this amazing cover of Sign original by Aya Uchida in English
-# Refer to src/musicdownloader/songloader.py for which metadata options you can add. These override any of those automatically fetched
+# Refer to src/musicdownloader/songloader.py for which metadata options you can add. These override any of those fields that are automatically fetched
 [[song]]
 name = "Sign - TQQ ending - English Cover"
-youtube_url = "https://www.youtube.com/watch?v=g89-7dQMMjY"
+youtube_url = "https://music.youtube.com/watch?v=g89-7dQMMjY"
 [song.metadata_overrides]
 title = "[Gotoubun no Hanayome ED 1] Sign (English Cover)"
 artist = ["Chiisana", "Lunarveil", "Spiral", "Shiena", "Saki"] # Can also be a string for a single artist
@@ -63,7 +64,20 @@ album = "Ephemera"
 track_number = 9
 year = 2022
 comment = "This cover is goated..."
-lyrics = """Insert your
+lyrics = """
+Insert your
 very long lyrics here
+"""
+
+[[song]]
+name = "Kevin Temmer - The Student Loans Song"
+youtube_url = "https://music.youtube.com/watch?v=GLa2wwyImK0"
+[song.metadata_overrides]
+artist = "Kevin Temmer Tunes"
+year = 2022
+comment = """
+The regular youtube url https://www.youtube.com/watch?v=GLa2wwyImK0 works perfectly fine too,
+but the music.youtube url allows for higher quality audio formats assuming you have premium
+and provide the cookies for that account (either in the form of referencing the browser profile or netscape cookies).
 """
 ```
