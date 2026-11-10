@@ -59,7 +59,7 @@ def yt_music_tracks_to_toml(url: str, file_output: str | Path | None) -> list[So
 
     recv_songs: list[SongInfo] = []
     for s in converted:
-        parts = [s.get("artist"), s.get("title"), s.get("album")]
+        parts = [s.get("title"), s.get("album"), s.get("artist")]
         recv_songs.append(SongInfo(
             youtube_url=s.get("url"),
             name = " - ".join(part for part in parts if part)
@@ -111,7 +111,7 @@ def download_songs_from_yt_playlist(url: str, output_location: str | Path, cooki
     
 
 if __name__ == "__main__":
-    yt_music_playlist = "https://music.youtube.com/playlist?list=PLaOgDfABCiaY"
+    yt_music_playlist = "https://music.youtube.com/playlist?list=OLAK5uy_mJe9MXok92wfCA0Yo6NFMyNV2bK__iXdo"
     tracks = get_yt_music_tracks_information(yt_music_playlist)
 
     print(f"Extracted {len(tracks)} tracks:\n")

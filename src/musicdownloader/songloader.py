@@ -1,6 +1,14 @@
 from typing import Optional
 from dataclasses import dataclass
+from urllib.parse import parse_qs, urlparse
 
+def get_youtube_id(url):
+    parsed = urlparse(url)
+    if "youtube.com" in parsed.netloc:
+        return parse_qs(parsed.query).get("v", [None])[0]
+    elif "youtu.be" in parsed.netloc:
+        return parsed.path.lstrip("/")
+    return None
 
 @dataclass 
 class SongMetaData: 
@@ -33,6 +41,7 @@ class SongInfo:
     def __eq__(self, other: SongInfo) -> bool:
         if not isinstance(other, SongInfo):
             return NotImplemented
-        return self.youtube_url == other.youtube_url
+        return get_youtube_id(self.youtube_url) == get_youtube_id(other.youtube_url)
+
     def __hash__(self):
         return hash(self.youtube_url)
