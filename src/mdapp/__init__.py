@@ -2,7 +2,9 @@ import time
 
 from just_playback import Playback 
 
-def main():
+from . import backend
+
+def play_test():
     playback = Playback() # creates an object for managing playback of a single audio file
     playback.load_file('playlist/Sukiyo.opus')
     playback.play() 
@@ -14,3 +16,6 @@ def main():
             x = input()
     except KeyboardInterrupt:
         pass 
+
+def main():
+    backend.main()

@@ -3,7 +3,10 @@ from just_playback import Playback, SUPPORTED_AUDIO_FORMATS
 from pathlib import Path
 from dataclasses import dataclass, field
 from collections import deque
-from queue import Queue
+import random 
+
+from . import config
+
 print(SUPPORTED_AUDIO_FORMATS)
 
 def is_supported_audio(audio_file: Path) -> bool:
@@ -45,20 +48,55 @@ class Playlist:
             if other in p:
                 return True 
         return False 
+
+    def get_all_songs_list(self, include_sub_playlists: bool = True) -> list[Path]:
+        if not include_sub_playlists:
+            return self.music_files
+        songs = []
+        pls = deque([self])
+       
+        while pls: 
+            node = pls.popleft()
+            for p in node.playlists:
+                pls.append(p)
+            songs += node.music_files
+        return songs 
+
+    def get_random_song(self, include_sub_playlists: bool = True):
+        if not include_sub_playlists:
+            rng = random.randint(0, len(self.music_files) - 1)
+            return self.music_files[rng]
         
+        chosen_songs: Path | None = self.get_all_songs_list(include_sub_playlists=True)
+        return chosen_songs[random.randint(0, len(chosen_songs)-1)]
+
+@dataclass 
+class MusicNode:
+    song: Path 
+    prev: MusicNode = None 
+    next: MusicNode = None 
+
+    
+
+    
 
 class MDapp:
     available_playlists: list[Playlist] 
     playlist: Playlist | None 
-    queue: Queue
+    queue: MusicNode
     player: Playback
+    conf: config.MDappConfig
 
 
-    def __init__(self):
+
+    def __init__(self, conf: config.MDappConfig = config.DEFAULT_MDAPPCONF):
         self.available_playlists = []
         self.playlist = None 
-        self.queue = Queue()
         self.player = Playback()
+        
+        self.queue = None 
+
+        self.conf = conf
         
 
     def scan_for_playlists(self, folders: str | list[str]):
@@ -68,9 +106,9 @@ class MDapp:
                 if item.is_dir(follow_symlinks=True):
                     scan_folder(item, cur_folder_pl)
                 elif item.is_file(follow_symlinks=True):
-                    if not is_supported_audio(item):
-                        continue 
-                    cur_folder_pl.music_files.append(item)
+                    if is_supported_audio(item):
+                        cur_folder_pl.music_files.append(item)
+            
             if cur_folder_pl.is_empty():
                 return 
             pl.playlists.append(cur_folder_pl)
@@ -86,11 +124,57 @@ class MDapp:
 
     def select_playlist(self, pl: Playlist):
         self.playlist = pl 
-        self.queue.put() 
 
 
     def play_next(self):
-        pass 
+        if self.queue.next:
+            next_node = self.queue.next
+        elif self.conf.shuffle:
+            next_node = self._get_next_shuffle()
+        else:
+            next_node = self._get_next_not_shuffle()
+        
+        if next_node is None:
+            return
+        self.player.load_file(self.queue.song)
+        self.player.play()
+        
+    def _get_next_shuffle(self) -> MusicNode | None:
+        prevs = self._get_prev_played()
+        r = self.playlist.get_random_song(self.conf.play_subplaylists)
+        if r is None:
+            return None 
+        while r in prevs:
+            r = self.playlist.get_random_song(self.conf.play_subplaylists)
+        if r is None:
+            return None 
+        else:
+            return MusicNode(
+                song=r
+            )
+            
+    def _get_next_not_shuffle(self):
+        songs = self.playlist.get_all_songs_list(self.conf.play_subplaylists)
+        try:
+            if not self.queue:
+                return MusicNode(song=songs[0])                
+        except IndexError:
+            return None
+        for i in range(len(songs)):
+            if songs[i] == self.queue.song:
+                return MusicNode(
+                    song=songs[(i + 1) % len(songs)]
+                )
+        return None 
+        
+        
+    def _get_prev_played(self):
+        prev_played: list[Path] = []
+        cur = self.queue
+        while len(prev_played) <= self.conf.songs_before_reshuffle and cur:
+            prev_played.append(cur.song)
+            cur = cur.prev 
+        return prev_played 
 
     def toggle_pause_play(self):
         if not self.player.active:
@@ -99,10 +183,24 @@ class MDapp:
             self.player.resume()
         else:
             self.player.pause()
+    
+    def pause(self):
+        self.player.pause()
+    def play(self):
+        self.player.play()
 
-if __name__ == '__main__':
+
+
+
+
+
+
+
+def main():
     from pprint import pprint
     fat = MDapp()
 
     fat.scan_for_playlists(["playlist", "music"])
+
     pprint(fat.available_playlists)
+    pprint(fat.available_playlists[1].get_all_songs_list())
