@@ -21,6 +21,8 @@ def read_music_file_toml(file: Path | str, mode: Literal["f", "s"] = "f") -> lis
         data = tomllib.loads(file)
     else:
         raise ValueError(f"Invalid mode received: {mode}")
+    if not data:
+        return []
     songs_list: SongList = dacite.from_dict(data_class=SongList, data=data)
     return songs_list.song
 
