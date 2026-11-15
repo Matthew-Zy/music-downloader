@@ -180,6 +180,10 @@ youtube_url = "https://music.youtube.com/watch?v=XyL-beZoqos"
 # Coldplay
 
 [[song]]
+name = "Hymm for the Weekend - Coldplay"
+youtube_url = "https://music.youtube.com/watch?v=H3Kzh6RrnMc"
+
+[[song]]
 name = "Coldplay - Clocks"
 youtube_url = "https://music.youtube.com/watch?v=8Xv_Hg8o1fw"
 
@@ -613,15 +617,131 @@ youtube_url = "https://music.youtube.com/watch?v=_p63lvKH2KM"
 name = "Katy Perry - Teenage Dream - Teenage Dream: The Complete Confection"
 
 [[song]]
-youtube_url = "https://music.youtube.com/watch?v=rsGpqXiY3AI"
-name = "Strong R. - Lost Frequencies - Reality (Strong R. Remix)"
-[song.metadata_overrides]
-album = "Tower Battles"
-
-[[song]]
 youtube_url = "https://music.youtube.com/watch?v=Ztdc7TcPdAA"
 name = "Shawn Mendes - There's Nothing Holdin' Me Back - Illuminate (Deluxe)"
 
 [[song]]
 youtube_url = "https://music.youtube.com/watch?v=qSay_8xzijg"
 name = "Shawn Mendes - Treat You Better - Illuminate (Deluxe)"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=XJyM5pXuQ5A"
+name = "A Little Faster - A Little Faster - There For Tomorrow"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=w1Smzzw_w7Q"
+name = "Ride - Blurryface - twenty one pilots"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=oLeROuCMwj8"
+name = "Heathens - Heathens - twenty one pilots"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=K1FlAphL2p8"
+name = "Stressed Out - Blurryface - twenty one pilots"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=0w6qAo4ZuU0"
+name = "Rewrite The Stars - The Greatest Showman (Original Motion Picture Soundtrack) - Zac Efron, Zendaya"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=KtDmEy7R_c8"
+name = "Little Talks - My Head Is An Animal - Of Monsters and Men"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=X5pQmiFo9i0"
+name = "Lost Frequencies feat. Janieck Devy - Reality (DOPEDROP Remix) (feat. Bwonces) - Dopedrop"
+[song.metadata_overrides]
+album = "Tower Battles"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=JBvGcMQQVzk"
+name = "Reality (Christmas Mix) (feat. Janieck) - Lost Frequencies"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=Ntn1-SocNiY"
+name = "Waka Waka (feat. Freshlyground) - Shakira"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=gxEPV4kolz0"
+name = "Piano Man - Billy Joel"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=sAvePjBhaFA"
+name = "I'm Still Standing - Sing (Original Motion Picture Soundtrack) - Taron Egerton"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=n0GXk_T2zs8"
+name = "Training Season - Radical Optimism - Dua Lipa"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=ffmOr4-bbbA"
+name = "Stronger (What Doesn't Kill You) - Stronger - Kelly Clarkson"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=UUpuyzPJeWA"
+name = "We Found Love - Talk That Talk - Rihanna, Calvin Harris"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=v0kjCEZ0-3g"
+name = "Starships - Pink Friday ... Roman Reloaded - Nicki Minaj"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=enOtfOGqm-0"
+name = "Everytime We Touch (Radio Edit) - Everytime We Touch - Cascada"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=J1aVXLHQRd4"
+name = "Demons - Night Visions - Imagine Dragons"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=I203G1sMGDg"
+name = "Bad Liar - Origins - Imagine Dragons"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=27WDAYaVS-s"
+name = "Thrift Shop (feat. Wanz) - The Heist (Deluxe Edition) - Macklemore & Ryan Lewis"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=fdz_cabS9BU"
+name = "Thinking out Loud - x (Deluxe Edition) - Ed Sheeran"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=dSlYFtXENPo"
+name = "Teenage Dirtbag - Wheatus - Wheatus"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=sT_hnNDstnE"
+name = "Stacy's Mom - Welcome Interstate Managers - Fountains Of Wayne"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=a2giXO6eyuI"
+name = "Set Fire to the Rain - 21 - Adele"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=QyN7J1eB1fU"
+name = "Talking to the Moon - Doo-Wops & Hooligans (Deluxe) - Bruno Mars"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=4ujBQOzs6Lw"
+name = "Rolling in the Deep - Rolling in the Deep - Adele"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=Rgrt_8mXrK8"
+name = "Get Lucky (Radio Edit - feat. Pharrell Williams and Nile Rodgers) - Get Lucky (Radio Edit - feat. Pharrell Williams and Nile Rodgers) - Daft Punk, Pharrell Williams, Nile Rodgers"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=VIUKdjDNbdE"
+name = "Cheerleader (Felix Jaehn Remix) (Radio Edit) - Me 4 U - OMI"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=owTWCbq_nSk"
+name = "Something Just Like This - Something Just Like This - The Chainsmokers, Coldplay"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=8Sp6MZG_Byw"
+name = "Wake Me Up - hopecore songs - Avicii"
+
+[[song]]
+youtube_url = "https://music.youtube.com/watch?v=khnokW3Mw24"
+name = "Instant Crush (feat. Julian Casablancas) - Random Access Memories - Daft Punk, Julian Casablancas"
