@@ -8,6 +8,7 @@ endif
 
 # Fix backslashes for cross-platform safety in Make commands
 HOME := $(subst \,/,$(HOME))
+
 PLAYLIST_DIR := music
 BROWSER_COOKIES ?= firefox
 FLAGS := 
@@ -60,9 +61,9 @@ sync:				## Usage: make sync PLAYLIST_DIR=[DIR]. Syncs a given folder containing
 
 
 sync-desktop:		## sync music files for my desktop (which runs windows)
-	$(MAKE) sync PLAYLIST_DIR="$(HOME)\\Music\\My Music" FLAGS=$(FLAGS)
+	$(MAKE) sync PLAYLIST_DIR="$(HOME)/Music/My Music" FLAGS=$(FLAGS)
 
-WINDOWS_LAPTOP_PLAYLIST_DIR := "D:\Music\My Music"
+WINDOWS_LAPTOP_PLAYLIST_DIR := "D:/Music/My Music"
 LAPTOP_PLAYLIST_DIR := "/mnt/D/Music/My Music"
 ifeq ($(OS),Windows_NT)
 	LAPTOP_PLAYLIST_DIR := $(WINDOWS_LAPTOP_PLAYLIST_DIR)
