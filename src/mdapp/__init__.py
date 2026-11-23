@@ -19,3 +19,4 @@ def play_test():
 
 def main():
     cli.run_cli()
+

@@ -3,11 +3,12 @@ from just_playback import Playback, SUPPORTED_AUDIO_FORMATS
 from pathlib import Path
 from dataclasses import dataclass, field
 from collections import deque
-import random 
+import random
+import threading 
 
 from . import config
 
-print(SUPPORTED_AUDIO_FORMATS)
+# print(SUPPORTED_AUDIO_FORMATS)
 
 def is_supported_audio(audio_file: Path) -> bool:
     if audio_file.suffix in SUPPORTED_AUDIO_FORMATS:
@@ -87,7 +88,7 @@ class MDapp:
     player: Playback
     conf: config.MDappConfig
 
-
+    stop_event: threading.Event
 
     def __init__(self, conf: config.MDappConfig = config.DEFAULT_MDAPPCONF):
         self.available_playlists = []
@@ -98,6 +99,15 @@ class MDapp:
         self.conf = conf
         self.scan_for_playlists(self.conf.playlist_folders)
         self.playlist = self.available_playlists[0]
+        
+        self.stop_event = threading.Event()
+        
+        monitor_thread = threading.Thread(
+            target=self._monitor_play_next,
+            args=(),
+            daemon=True
+        )
+        monitor_thread.start()
         
 
     def scan_for_playlists(self, folders: str | list[str]):
@@ -137,9 +147,61 @@ class MDapp:
         
         if next_node is None:
             return
+        prev = self.queue 
         self.queue = next_node
+        next_node.prev = prev
+        
+        if prev:
+            prev.next = next_node
         self.player.load_file(self.queue.song)
         self.player.play()
+
+    def play_prev(self):
+        if self.queue and self.queue.prev:
+            self.queue = self.queue.prev 
+        self.player.load_file(self.queue.song)
+        self.player.play()
+
+    def _monitor_play_next(self):
+        was_playing = False
+
+        while not self.stop_event.is_set():
+            if self.player.closed:
+                break
+
+            if self.player.paused:
+                self.stop_event.wait(0.1)
+                continue
+
+            playing = (
+                self.player.playing
+                and self.current_song is not None
+            )
+
+            if was_playing and not playing:
+                self.play_next()
+                was_playing = False
+            elif playing:
+                was_playing = True
+
+            self.stop_event.wait(0.1)
+    
+    @property 
+    def current_song(self) -> str | None:
+        try:
+            return self.queue.song.stem 
+        except AttributeError:
+            return None
+    @property 
+    def current_song_time(self) -> float:
+        if self.current_song is None:
+            return None
+        return self.player.curr_pos 
+    @property 
+    def current_song_length(self) -> float:
+        if self.current_song is None:
+            return None
+        return self.player.duration
         
     def _get_next_shuffle(self) -> MusicNode | None:
         prevs = self._get_prev_played()
@@ -192,6 +254,10 @@ class MDapp:
         self.player.play()
 
 
+    def set_to(self, time: float):
+        if self.current_song is None:
+            return 
+        self.player.seek(time)
 
 
 
