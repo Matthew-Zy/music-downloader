@@ -95,8 +95,9 @@ class MDapp:
         self.player = Playback()
         
         self.queue = None 
-
         self.conf = conf
+        self.scan_for_playlists(self.conf.playlist_folders)
+        self.playlist = self.available_playlists[0]
         
 
     def scan_for_playlists(self, folders: str | list[str]):
@@ -127,7 +128,7 @@ class MDapp:
 
 
     def play_next(self):
-        if self.queue.next:
+        if self.queue and self.queue.next:
             next_node = self.queue.next
         elif self.conf.shuffle:
             next_node = self._get_next_shuffle()
@@ -136,6 +137,7 @@ class MDapp:
         
         if next_node is None:
             return
+        self.queue = next_node
         self.player.load_file(self.queue.song)
         self.player.play()
         

@@ -21,6 +21,6 @@ DEFAULT_MDAPPCONF = MDappConfig(
 )
 
 
-print(json.dumps(asdict(DEFAULT_MDAPPCONF)))
+# print(json.dumps(asdict(DEFAULT_MDAPPCONF)))
 
 
