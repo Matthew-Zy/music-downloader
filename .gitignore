@@ -14,8 +14,11 @@ music
 music/
 playlist
 playlist/
+albums
+albums/
+
 
 test/
 tests/
-songs/
+
 fat.toml
