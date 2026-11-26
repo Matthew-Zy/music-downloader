@@ -1,0 +1,10 @@
+*
+
+!.gitignore
+
+!*/
+
+!*.toml
+
+# Each machine with this sync'd playlist should probably have it's own downloaded copy. That's probably the way to go
+# !*.json
