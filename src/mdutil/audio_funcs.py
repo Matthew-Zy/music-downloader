@@ -41,6 +41,7 @@ def rm_audio(folder: Path | str):
     
 
 def playlist_lengths(path: Path | str):
+    total_songs = 0
     def playlist_len(playlist_file: Path):
         def warn_duplicate(lines: list[str], duplicate_url: str):
             instance = 0
@@ -69,7 +70,8 @@ def playlist_lengths(path: Path | str):
     
             unique += 1
             seen.append(s)
-            
+        nonlocal total_songs
+        total_songs += len(songs)
         print(f"{playlist_file.name:<12}- {len(songs):>3} Total; {unique:>3} Uniques Urls; {(len(songs)-unique):>2} Duplicate Url(s);")
 
     path = Path(path) if isinstance(path, str) else path
@@ -79,6 +81,8 @@ def playlist_lengths(path: Path | str):
         dfs_files(path, playlist_len)
     else: 
         print(f'Path: "{path}" does not exist or could not be found')
+        return 
+    print(f"Total of {total_songs} songs in folder {path}")
 
 
 def remove_list_query(url: str) -> str:

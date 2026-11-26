@@ -66,10 +66,6 @@ def main():
     args = parse_args()
 #    print(args)
 
-    if args.repl:
-        readevalloop = repl.MDutilRepl(args.output)
-        readevalloop.run_repl()
-        return
 
     if args.extract:
         if "youtube" in args.extract.lower():
@@ -96,7 +92,12 @@ def main():
             print("Please provide an output folder with -o when downloading from a playlist")
         actions += 1
 
+    if args.repl:
+        readevalloop = repl.MDutilRepl(args.output)
+        readevalloop.run_repl()
+        actions += 1
+    
     if actions <= 0:
         print_to_terminal(f"{actions} actions completed, please use -h or --help for help")
     else:
-        print_to_terminal(f"Completed {actions} action(s)")
+        print_to_terminal(f"Completed {actions} action{"s" if actions > 1 else ""}")

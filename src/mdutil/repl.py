@@ -1,5 +1,7 @@
 from pathlib import Path
 from dataclasses import dataclass 
+import shlex, os
+
 from . import extract_playlist
 
             
@@ -39,13 +41,18 @@ class MDutilRepl:
         self.commands = {
             "help" : ReplCmd(self.cmd_print_help, "Prints help for the repl and available commands"),
             "output" : ReplCmd(self.cmd_set_output, "Usage: output [output file]. Sets the output of any commands we use. Do not specify an output file for None"),
-            "clear": ReplCmd(lambda y: print("\x1b[2J\x1b[3J\x1b[H"), "clears the terminal")
+            "cwd" : ReplCmd(self.cmd_cwd, "Usage: cwd [path]. Changes the current working directory to a new given path"),
+            "pwd" : ReplCmd(lambda _: print(os.getcwd()), "Prints the current working directory of the repl"),
+            "clear": ReplCmd(lambda _: print("\x1b[2J\x1b[3J\x1b[H"), "clears the terminal")
         }
 
+################### Repl commands here
     def cmd_print_help(self, argv: list[str]):
         print("Available commands:")
+        longest_key = max(self.commands, key=len)
+        width = len(longest_key)
         for i, v in self.commands.items():
-            print(f"{i}; {v.help}")
+            print(f"{i:<{width}} : {v.help}")
         pass
 
     def cmd_set_output(self, argv: list[str]):
@@ -55,6 +62,23 @@ class MDutilRepl:
         except IndexError:
             self.output = None
             print("Output set to None")
+
+    # coreutils at home
+    def cmd_cwd(self, argv: list[str]):
+        try:
+            os.chdir(argv[1])
+            print(f"Changed working directory to: {os.getcwd()}")
+        except IndexError:
+            print("Please enter a working directory")
+            print(f"Working directory remains unchanged ({os.getcwd()})")
+        except FileNotFoundError:
+            print(f"Working directory: {Path(argv[1]).absolute()} does not exist")
+        except OSError:
+            print(f"Error changing working directory to: {argv[1]}")
+
+
+################### Repl commands end here
+
     def execute_command(self, argv: list[str]):
         if len(argv) < 1:
             return 
@@ -71,11 +95,17 @@ class MDutilRepl:
             return 
         argv[0] = argv[0].lower()
         cmd.cmd(argv)
+
+
+
+
+    
     def run_repl(self):
         print("Use Control+C to exit; enter help for help")
         try:
             while True:
-                argv_at_home: list[str] = input("> ").strip().split()
+                argv_at_home: list[str] = shlex.split(input("> "))
+
                 self.execute_command(argv_at_home)
         except KeyboardInterrupt:
             print("Goodbye!")
